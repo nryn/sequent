@@ -1,6 +1,7 @@
 'use strict'
 
-function Song(phrases = {}, tempo = 120, keySignature = "Cmaj") {
+function Song(phrases = {}, tempo = 120, keySignature = "Cmaj", name = "Untitled") {
+  this.name = name;
   this.tempo = tempo;
   this.keySignature = keySignature;
   this.structure = [];
