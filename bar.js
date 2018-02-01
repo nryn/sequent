@@ -19,5 +19,3 @@ Bar.prototype.createStructure = function(beatCount, beatUnit) {
     };
   };
 };
-
-module.exports = Bar;

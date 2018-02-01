@@ -66,5 +66,3 @@ Player.prototype.clear = function() {
   this.currentSong = {};
   this.noteBuffer = [];
 };
-
-module.exports = Player;

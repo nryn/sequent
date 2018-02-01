@@ -25,7 +25,7 @@ Song.prototype.searchForInstruments = function () {
       };
     };
   };
-  
+
   iterateOverObject(this.phrases);
   return instrumentList;
 };
@@ -58,5 +58,3 @@ Song.prototype.removePhrase = function(pos) {
 Song.prototype.duplicatePhrase = function(section) {
   this.structure.push(section);
 };
-
-module.exports = Song;

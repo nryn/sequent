@@ -1,12 +1,5 @@
 'use strict'
 
-const Song = require('./song');
-const Phrase = require('./phrase');
-const Bar = require('./bar');
-const Note = require('./note');
-const Player = require('./player');
-const util = require('util') // tool to help us inspect objects
-
 // Let's make a song with one phrase, two bars of 4/4, each with C2s every quarter note.
 // First, make the component parts.
 
@@ -44,10 +37,7 @@ myFirstSong.addPhrase(mySecondPhrase);
 myFirstSong.duplicatePhrase('A');
 
 // Now we can see what the whole song object looks like:
-// console.log(util.inspect(myFirstSong, {showHidden: false, depth: null}))
-
-// We could log JSON to stdout to allow us to use tools like jq on command line.
-// console.log(JSON.stringify(myFirstSong));
+// console.log(myFirstSong)
 
 // ...and that's how a song could be made!
 // ---------------------------------------

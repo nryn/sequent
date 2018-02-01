@@ -22,5 +22,3 @@ Phrase.prototype.removeBar = function(pos) {
 Phrase.prototype.duplicateBar = function(pos) {
   this.addBar(this.bars[pos]);
 };
-
-module.exports = Phrase;
