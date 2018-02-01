@@ -5,8 +5,30 @@ function Song(phrases = {}, tempo = 120, keySignature = "Cmaj", name = "Untitled
   this.tempo = tempo;
   this.keySignature = keySignature;
   this.structure = [];
+  this.getInstrumentList = this.searchForInstruments;
   this.phrases = phrases;
 }
+
+Song.prototype.searchForInstruments = function () {
+
+  let instrumentList = [];
+
+  function iterateOverObject(obj) {
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        if (typeof obj[property] == "object") {
+          iterateOverObject(obj[property]);
+        }
+        else {
+          if (property == "instrument" && !instrumentList.includes(obj[property])) { instrumentList.push(obj[property]) };
+        };
+      };
+    };
+  };
+  
+  iterateOverObject(this.phrases);
+  return instrumentList;
+};
 
 let sectionMap=new WeakMap, sectionLetter = "A".charCodeAt(0) - 1;
 Song.prototype.generateSection = function(phrase) {
