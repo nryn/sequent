@@ -1,0 +1,141 @@
+body{
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  background: linear-gradient(#e8ffff, #1bbbbb);
+  display: flex;
+  justify-content: center;
+  margin-top: 10em;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#transport-bar {
+  display: flex;
+}
+
+table {
+  margin-top: 50px;
+  border-radius: 10px;
+  padding: 2px;
+  border: 2px solid black;
+  background-color: black;
+  box-sizing: border-box;
+  overflow:hidden;
+  transition-timing-function: ease-out;
+  transition:transform 4s; // we transition the transform
+  height:auto;
+  transform:scale(1, 1); // after collapse is removed
+}
+table.collapsed {
+  transform:scale(0, 0); // *squish*
+  transform-origin:top; // keep the top of the element in the same place. this is optional.
+}
+
+tr {
+  transition-timing-function: ease;
+  transition:transform 0.8s; // note that we're transitioning transform, not height!
+  height:auto;
+  transform:scaleY(1); // implicit, but good to specify explicitly
+}
+tr.collapsed {
+  transform:scaleY(0); // *squish*
+  transform-origin:top; // keep the top of the element in the same place. this is optional.
+}
+
+td {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  padding: 0;
+  border: 2px solid black;
+  background-color: paleturquoise;
+  box-sizing: border-box;
+  transition-timing-function: ease;
+  transition:transform 0.8s; // note that we're transitioning transform, not height!
+  height:auto;
+  transform:scale(1, 1); // implicit, but good to specify explicitly
+}
+td.collapsed {
+  transform:scale(0, 0); // *squish*
+  transform-origin:top; // keep the top of the element in the same place. this is optional.
+}
+
+@keyframes fadeOut {
+ 	0% {
+ 		background: black
+ 	}
+ 	100% {
+ 		background: null;
+ 	}
+}
+
+div.filler {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+div.filler.triggered1 {
+  animation: fadeOut 2000ms;
+}
+div.filler.triggered2 {
+  animation: fadeOut 1000ms;
+}
+div.filler.triggered4 {
+  animation: fadeOut 500ms;
+}
+div.filler.triggered8 {
+  animation: fadeOut 250ms;
+}
+div.filler.triggered16 {
+  animation: fadeOut 125ms;
+}
+
+
+button {
+  margin: 10px;
+  display: block;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+#content {
+  width: 600px;
+  border: 6px double black;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  line-height: 1.6em;
+}
+
+@media only screen
+  and (min-device-width: 50px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  body {
+    font-size: 25pt;
+  }
+  button {
+    border: 5px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 38px;
+  }
+
+  #container {
+    width: 100%;
+  }
+}
