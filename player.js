@@ -3,6 +3,7 @@
 function Player() {
   this.currentSong = {};
   this.noteBuffer = [];
+  this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 };
 
 Player.prototype.play = function() {
