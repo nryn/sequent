@@ -5,12 +5,12 @@
     <script src="bar.js"></script>
     <script src="phrase.js"></script>
     <script src="song.js"></script>
+    <script src="playbackVisualiser.js"></script>
+    <script src="sequencer.js"></script>
     <script src="player.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Comfortaa&amp;subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
     <script>
-    const sequentPlayer = new Player();
-
     function createSong() {
       const mySong = new Song();
       const myPhrase = new Phrase();
@@ -48,7 +48,9 @@
       return mySong;
     };
 
-    const exampleSong = createSong(); // before we have our own sequencer to make songs effectively, this example song should be available globally shortly after page load
+    let exampleSong = createSong(); // before we have our own sequencer to make songs effectively, this example song should be available globally shortly after page load
+    const sequentPlayer = new Player();
+
     </script>
   </head>
   <body>

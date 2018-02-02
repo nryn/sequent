@@ -1,9 +1,10 @@
 'use strict'
 
 function Player() {
-  this.currentSong = {};
+  this.currentSong = getCurrentSong();
   this.noteBuffer = [];
-  this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  this.visualiser = new Visualiser();
+  this.sequencer = new Sequencer();
 };
 
 Player.prototype.play = function() {
@@ -119,3 +120,8 @@ function expandGridArea() {
     };
   };
 };
+
+function getCurrentSong() {
+  let currentSong = exampleSong;
+  return currentSong || {};
+}
