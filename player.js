@@ -70,7 +70,7 @@ Player.prototype.clear = function() {
 };
 
 function renderGridArea(song){
-  let playbackTable = document.getElementById('grid');
+  let playbackTable = document.getElementById('player-grid');
   while (playbackTable.hasChildNodes()) {
     playbackTable.removeChild(playbackTable.lastChild); // let's empty the grid before rendering it, just in case
   };
@@ -96,7 +96,7 @@ function renderGridArea(song){
 };
 
 function expandGridArea() {
-  let playbackTable = document.getElementById('grid');
+  let playbackTable = document.getElementById('player-grid');
   let noteRows = document.querySelectorAll('.note_row');
   let noteCells = document.querySelectorAll('.note_cell');
 
