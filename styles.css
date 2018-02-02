@@ -14,7 +14,50 @@ body{
 
 .menu {
   display: flex;
+  justify-content: center;
 }
+
+button {
+  margin: 10px 4px;
+  width: 120px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+#content {
+  width: 600px;
+  border: 6px double black;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  line-height: 1.6em;
+}
+
+#workspaces {
+  display: flex;
+  margin-left: 50%; //this needs to be edited with js on toggle-click, to animate between the two workspaces, 50% left or right
+  margin-right: 0%;
+  transition:margin 0.4s;
+  transition-timing-function: cubic-bezier(0.22,0,0.28,1);
+}
+
+.workspace {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Things to do with the main grid system*/
 
 table {
   margin-top: 50px;
@@ -95,30 +138,81 @@ div.filler.triggered16 {
   animation: fadeOut 125ms;
 }
 
-
-button {
-  margin: 10px;
-  display: block;
-  border: 2px solid black;
-  border-radius: 5px;
-  background-color: paleturquoise;
-  font-family: 'Comfortaa', 'verdana', san-serif;
-  font-size: 100%;
-  padding-top: 5px;
-  box-sizing: border-box;
+/* The top switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+  height: 34px;
 }
-
-#content {
-  width: 600px;
-  border: 6px double black;
-  border-radius: 5px;
-  background-color: paleturquoise;
-  font-family: 'Comfortaa', 'verdana', san-serif;
-  font-size: 100%;
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  content: attr(text-before);
+  opacity: 1;
+  position: absolute;
   padding: 4px;
-  display: flex;
-  align-items: center;
-  line-height: 1.6em;
+  width: 45%;
+  left: 4px;
+  bottom: 4px;
+  background-color: #e8ffff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  display: inline;
+  text-align: center;
+}
+.slider:after {
+  content: attr(text-after);
+  opacity: 1;
+  position: absolute;
+  padding: 4px;
+  width: 45%;
+  left: 4px;
+  bottom: 4px;
+  background-color: #e8ffff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  display: inline;
+  text-align: center;
+}
+input:checked + .slider {
+  background-color: #1bbbbb;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #1bbbbb;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(122px);
+  -ms-transform: translateX(122px);
+  transform: translateX(122px);
+}
+input:checked + .slider:after {
+  -webkit-transform: translateX(122px);
+  -ms-transform: translateX(122px);
+  transform: translateX(122px);
+  opacity: 0;
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 5px;
+}
+.slider.round:before {
+  border-radius: 5px;
+}
+.slider.round:after {
+  border-radius: 5px;
 }
 
 @media only screen

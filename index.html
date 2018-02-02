@@ -54,20 +54,44 @@
   <body>
     <div id="container">
       <h1>sequent</h1>
-      <div id="playback-menu" class="playback menu">
-        <button onClick="sequentPlayer.load(exampleSong);">Load Example Sequence</button>
-        <button onClick="sequentPlayer.play();">Play</button>
+      <div id="workspace-toggle">
+        <label class="switch">
+          <input type="checkbox" id="workspace-toggle-switch">
+          <span class="slider round" text-after="playback" text-before="sequencer"></span>
+        </label>
       </div>
-      <div id="sequencer-menu" class="sequencer menu">
-        <button onClick="sequencer.createSong();">Create a Song</button>
-        <button onClick="sequencer.play();">Play</button>
-      </div>
-      <div id="playback-workspace" class="playback workspace">
-        <table id="player-grid" class="collapsed"></table>
-      </div>
-      <div id="sequencer-workspace" class="sequencer workspace">
-        <table id="sequencer-grid" class="collapsed"></table>
+      <div id="workspaces">
+        <div id="playback-workspace" class="playback workspace">
+          <div id="playback-menu" class="playback menu">
+            <button onClick="sequentPlayer.play();">play</button>
+            <button onClick="sequentPlayer.load(exampleSong);">load</button>
+          </div>
+          <table id="player-grid" class="collapsed"></table>
+        </div>
+        <div id="sequencer-workspace" class="sequencer workspace">
+          <div id="sequencer-menu" class="sequencer menu">
+            <button onClick="sequencer.createSong();">Create a Song</button>
+            <button onClick="sequencer.play();">play</button>
+            <div id="sequencer-">
+            </div>
+          </div>
+          <table id="sequencer-grid" class="collapsed"></table>
+        </div>
       </div>
     </div>
+    <script async="true">
+      var workspaceToggle = document.getElementById("workspace-toggle-switch");
+      var workspaceContainer = document.getElementById("workspaces");
+      workspaceToggle.addEventListener("change", swipeToWorkspace, false);
+      function swipeToWorkspace() {
+        if (workspaceToggle.checked) {
+          workspaceContainer.style.marginLeft = "-50%";
+          workspaceContainer.style.marginRight = "0%";
+        } else {
+          workspaceContainer.style.marginLeft = "0%";
+          workspaceContainer.style.marginRight = "-50%";
+        };
+      };
+    </script>
   </body>
 </html>
