@@ -47,10 +47,10 @@ Visualiser.prototype.renderGridArea = function(song){
   while (playbackTable.hasChildNodes()) {
     playbackTable.removeChild(playbackTable.lastChild); // let's empty the grid before rendering it, just in case
   };
-  const noteInScale = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
+  
   const instruments = song.getInstrumentList();
 
-  noteInScale.forEach(function(note) {
+  song.scale.forEach(function(note) {
     let row = document.createElement('tr');
     row.classList.add(note);
     row.classList.add("note_row");

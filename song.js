@@ -7,6 +7,7 @@ function Song(phrases = {}, tempo = 120, keySignature = "Cmaj", name = "Untitled
   this.structure = [];
   this.getInstrumentList = this.searchForInstruments;
   this.phrases = phrases;
+  this.scale = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
 }
 
 Song.prototype.searchForInstruments = function () {
