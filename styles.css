@@ -46,7 +46,7 @@ button {
   display: flex;
   margin-left: 50%; //this needs to be edited with js on toggle-click, to animate between the two workspaces, 50% left or right
   margin-right: 0%;
-  transition:margin 0.4s;
+  transition:margin 1.5s;
   transition-timing-function: cubic-bezier(0.22,0,0.28,1);
 }
 
@@ -55,6 +55,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition:opacity 0.4s;
 }
 
 /* Things to do with the main grid system*/

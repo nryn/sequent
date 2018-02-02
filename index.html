@@ -82,16 +82,22 @@
       </div>
     </div>
     <script async="true">
-      var workspaceToggle = document.getElementById("workspace-toggle-switch");
-      var workspaceContainer = document.getElementById("workspaces");
+      let workspaceToggle = document.getElementById("workspace-toggle-switch");
+      let workspaceContainer = document.getElementById("workspaces");
+      let playbackWorkspace = document.getElementById("playback-workspace");
+      let sequencerWorkspace = document.getElementById("sequencer-workspace");
       workspaceToggle.addEventListener("change", swipeToWorkspace, false);
       function swipeToWorkspace() {
         if (workspaceToggle.checked) {
           workspaceContainer.style.marginLeft = "-50%";
           workspaceContainer.style.marginRight = "0%";
+          playbackWorkspace.style.opacity = "0";
+          sequencerWorkspace.style.opacity = "1";
         } else {
           workspaceContainer.style.marginLeft = "0%";
           workspaceContainer.style.marginRight = "-50%";
+          playbackWorkspace.style.opacity = "1";
+          sequencerWorkspace.style.opacity = "0";
         };
       };
     </script>
