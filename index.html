@@ -54,14 +54,18 @@
   <body>
     <div id="container">
       <h1>sequent</h1>
-      <div id="transport-bar">
+      <div id="playback-menu" class="playback menu">
         <button onClick="sequentPlayer.load(exampleSong);">Load Example Sequence</button>
         <button onClick="sequentPlayer.play();">Play</button>
       </div>
-      <div id="playback-area" class="workspace">
+      <div id="sequencer-menu" class="sequencer menu">
+        <button onClick="sequencer.createSong();">Create a Song</button>
+        <button onClick="sequencer.play();">Play</button>
+      </div>
+      <div id="playback-workspace" class="playback workspace">
         <table id="player-grid" class="collapsed"></table>
       </div>
-      <div id="sequencer-area" class="workspace">
+      <div id="sequencer-workspace" class="sequencer workspace">
         <table id="sequencer-grid" class="collapsed"></table>
       </div>
     </div>
