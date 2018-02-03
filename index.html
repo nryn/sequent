@@ -16,7 +16,7 @@
       const myPhrase = new Phrase();
       const bOne = new Bar();
       const bTwo = new Bar();
-      const bThree = new Bar();
+      const bThree = new Bar(3,4);
       const trumpetC = new Note("Trumpet", "C", 2, 4);
       const vLongVocalG = new Note("Vocal", "G", 2, 1);
       const vShortPiccoloA = new Note("Piccolo", "A", 2, 16);
@@ -46,6 +46,7 @@
       bThree.beats[1][1].push(vShortSynthFs);
       const mySecondPhrase = new Phrase();
       mySong.addPhrase(mySecondPhrase);
+      mySecondPhrase.addBar(bThree);
       mySong.duplicatePhrase('A');
       return mySong;
     };
@@ -80,8 +81,9 @@
           <div id="sequencer-song-controls" class="sequencer song-controls">
             <div id="sequencer-title" class="sequencer title"></div>
             <div id="sequencer-sections-menu" class="sequencer sections-menu">
-              <div id="sequencer-sections-selector">
+              <div id="sequencer-sections-container">
                 <span id="sequencer-sections-selector-label">Sections : </span>
+                <div id="sequencer-sections-selector"></div>
               </div>
             </div>
             <div id="sequencer-transport-bar" class="sequencer transport-bar">

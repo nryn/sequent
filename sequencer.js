@@ -112,12 +112,16 @@ Sequencer.prototype.expandGridArea = function() {
 };
 
 Sequencer.prototype.showSongInfo = function(song) {
+  const songControlsArea = document.getElementById('sequencer-song-controls');
+  songControlsArea.style.transform = "scaleY(0)"; // initially collapse song info area
   const titleArea = document.getElementById("sequencer-title");
+  removeAllChildren(titleArea);
   let heading = document.createElement('h1');
   heading.innerHTML = "'" + song.name + "'";
   titleArea.appendChild(heading);
 
   const sectionsMenu = document.getElementById('sequencer-sections-selector');
+  removeAllChildren(sectionsMenu);
   song.structure.forEach(function(namedSection) {
     let sectionHolder = document.createElement('button');
     sectionHolder.classList.add('section-button');
@@ -127,6 +131,7 @@ Sequencer.prototype.showSongInfo = function(song) {
   });
 
   const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
+  removeAllChildren(instrumentDropdown);
   instrumentDropdown.setAttribute("onchange", "sequentPlayer.sequencer.showInstrument(this.value)")
   song.getInstrumentList().forEach(function(instrument) {
     let instrumentOption = document.createElement('option');
@@ -134,7 +139,7 @@ Sequencer.prototype.showSongInfo = function(song) {
     instrumentOption.setAttribute("value", instrument)
     instrumentDropdown.appendChild(instrumentOption);
   });
-  // think about triggering showInstrument here with the relevant inst from the dropdown
+  songControlsArea.style.transform = "scaleY(1)"; //expand song info area
 };
 
 Sequencer.prototype.showSection = function(sectionLetter) {
@@ -148,4 +153,10 @@ Sequencer.prototype.showInstrument = function(instrument) {
 
 Sequencer.prototype.createSong = function() {
 
+};
+
+function removeAllChildren(parentNode) {
+  while (parentNode.hasChildNodes()) {
+    parentNode.removeChild(parentNode.lastChild);
+  };
 };
