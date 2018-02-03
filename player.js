@@ -25,7 +25,8 @@ Player.prototype.load = function(song) {
     };
   };
   this.visualiser.renderGridArea(song)
-  this.sequencer.renderGridArea(song)
+  this.sequencer.renderGridArea(song, song.structure[0], song.getInstrumentList()[0])
+  this.sequencer.showSongInfo(song);
 };
 
 Player.prototype.clear = function() {
