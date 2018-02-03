@@ -95,12 +95,12 @@ Sequencer.prototype.expandGridArea = function() {
 
   for ( let i=0; i < noteRows.length; i++ ) {
     let animateRow = expandElementsFunctionFactory(i, noteRows);
-    setTimeout(animateRow, i * i * 6);
+    setTimeout(animateRow, i * i * 2);
   };
 
   for ( let i=0; i < noteCells.length; i++ ) {
     let animateCells = expandElementsFunctionFactory(i, noteCells);
-    setTimeout(animateCells, i * 8);
+    setTimeout(animateCells, i * 3);
   };
 
   function expandElementsFunctionFactory(iterator, nodeList) {
@@ -127,11 +127,11 @@ Sequencer.prototype.showSongInfo = function(song) {
   });
 
   const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
+  instrumentDropdown.setAttribute("onchange", "sequentPlayer.sequencer.showInstrument(this.value)")
   song.getInstrumentList().forEach(function(instrument) {
     let instrumentOption = document.createElement('option');
     instrumentOption.innerHTML = instrument;
     instrumentOption.setAttribute("value", instrument)
-    instrumentOption.setAttribute("onclick", "sequentPlayer.sequencer.showInstrument(" + instrument + ")")
     instrumentDropdown.appendChild(instrumentOption);
   });
   // think about triggering showInstrument here with the relevant inst from the dropdown
