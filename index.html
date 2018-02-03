@@ -16,6 +16,7 @@
       const myPhrase = new Phrase();
       const bOne = new Bar();
       const bTwo = new Bar();
+      const bThree = new Bar();
       const trumpetC = new Note("Trumpet", "C", 2, 4);
       const vLongVocalG = new Note("Vocal", "G", 2, 1);
       const vShortPiccoloA = new Note("Piccolo", "A", 2, 16);
@@ -28,7 +29,7 @@
       const shortSamplerC = new Note("Sampler", "C", 2, 8);
       const vLongGuitarB = new Note("Guitar", "B", 2, 1);
       const longShamisenG = new Note("Shamisen", "G", 2, 2);
-      myPhrase.addBar(bOne, bTwo);
+      myPhrase.addBar(bOne, bTwo, bThree);
       mySong.addPhrase(myPhrase);
       bOne.beats[1][1].push(vLongVocalG);
       bOne.beats[1][2].push(vShortSynthFs);
@@ -42,6 +43,7 @@
       bOne.beats[4][1].push(shortViolinD);
       bTwo.beats[2][1].push(vLongGuitarB);
       bTwo.beats[4][1].push(long808Bb);
+      bThree.beats[1][1].push(vShortSynthFs);
       const mySecondPhrase = new Phrase();
       mySong.addPhrase(mySecondPhrase);
       mySong.duplicatePhrase('A');
@@ -68,7 +70,7 @@
             <button onClick="sequentPlayer.play();">play</button>
             <button onClick="sequentPlayer.load(exampleSong);">load</button>
           </div>
-          <table id="player-grid" class="collapsed"></table>
+          <table id="playback-grid" class="collapsed"></table>
         </div>
         <div id="sequencer-workspace" class="sequencer workspace">
           <div id="sequencer-menu" class="sequencer menu">

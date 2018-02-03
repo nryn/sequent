@@ -43,24 +43,24 @@ Visualiser.prototype.renderNotesInGridCells = function(noteList) {
 };
 
 Visualiser.prototype.renderGridArea = function(song){
-  let playbackTable = document.getElementById('player-grid');
+  let playbackTable = document.getElementById('playback-grid');
   while (playbackTable.hasChildNodes()) {
     playbackTable.removeChild(playbackTable.lastChild); // let's empty the grid before rendering it, just in case
   };
-  
+
   const instruments = song.getInstrumentList();
 
   song.scale.forEach(function(note) {
     let row = document.createElement('tr');
     row.classList.add(note);
-    row.classList.add("note_row");
+    row.classList.add("vis_note_row");
     row.classList.add("collapsed");
     playbackTable.appendChild(row);
     instruments.forEach(function(instrument) {
       let noteCell = document.createElement('td');
       noteCell.id = note + "_" + instrument;
       noteCell.classList.add(instrument);
-      noteCell.classList.add("note_cell");
+      noteCell.classList.add("vis_note_cell");
       noteCell.classList.add("collapsed");
       row.appendChild(noteCell);
     });
@@ -69,9 +69,9 @@ Visualiser.prototype.renderGridArea = function(song){
 };
 
 Visualiser.prototype.expandGridArea = function() {
-  let playbackTable = document.getElementById('player-grid');
-  let noteRows = document.querySelectorAll('.note_row');
-  let noteCells = document.querySelectorAll('.note_cell');
+  let playbackTable = document.getElementById('playback-grid');
+  let noteRows = document.querySelectorAll('.vis_note_row');
+  let noteCells = document.querySelectorAll('.vis_note_cell');
 
   playbackTable.classList.remove("collapsed");
 
