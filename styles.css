@@ -17,12 +17,30 @@ body{
   justify-content: center;
 }
 
+#sequencer-sections-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 button {
   margin: 10px 4px;
   width: 120px;
   border: 2px solid black;
   border-radius: 5px;
   background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+.section-button {
+  width: 30px;
+  margin: 4px 3px;
+  border: 0px;
+  border-radius: 5px;
+  background-color: #e8ffff;
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
   padding-top: 5px;
@@ -58,10 +76,39 @@ button {
   transition:opacity 0.4s;
 }
 
+#sequencer-title {
+  text-align: center;
+}
+
+#sequencer-sections-selector {
+  background-color: #1ebbbb;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+#sequencer-sections-selector-label {
+  margin-left: 6px;
+}
+#sequencer-transport-bar {
+  display: flex;
+  justify-content: center;
+}
+
+select {
+  margin: 10px 4px;
+  width: 120px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  padding-top: 5px;
+  box-sizing: border-box;
+  height: 30px;
+}
+
 /* Things to do with the main grid system*/
 
 table {
-  margin-top: 50px;
   border-radius: 10px;
   padding: 2px;
   border: 2px solid black;
@@ -124,6 +171,14 @@ td.strike {
  	100% {
  		background: null;
  	}
+}
+
+div.seq_filler {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: black;
 }
 
 div.filler {

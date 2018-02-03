@@ -76,7 +76,19 @@
           <div id="sequencer-menu" class="sequencer menu">
             <button onClick="sequentPlayer.sequencer.createSong();">new</button>
             <button onClick="sequentPlayer.load(exampleSong);">load</button>
-            <div id="sequencer-">
+          </div>
+          <div id="sequencer-song-controls" class="sequencer song-controls">
+            <div id="sequencer-title" class="sequencer title"></div>
+            <div id="sequencer-sections-menu" class="sequencer sections-menu">
+              <div id="sequencer-sections-selector">
+                <span id="sequencer-sections-selector-label">Sections : </span>
+              </div>
+            </div>
+            <div id="sequencer-transport-bar" class="sequencer transport-bar">
+              <select id="sequencer-transport-bar-instrument-selector"></select>
+              <button onClick="sequentPlayer.play();">play</button>
+              <button onClick="sequentPlayer.save();">save</button>
+              <button onClick="sequentPlayer.sequencer.addBar();">add bar</button>
             </div>
           </div>
           <table id="sequencer-grid" class="collapsed"></table>
