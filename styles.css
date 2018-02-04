@@ -29,18 +29,6 @@ button {
   box-sizing: border-box;
 }
 
-.section-button {
-  width: 30px;
-  margin: 4px 3px;
-  border: 0px;
-  border-radius: 5px;
-  background-color: #e8ffff;
-  font-family: 'Comfortaa', 'verdana', san-serif;
-  font-size: 100%;
-  padding-top: 5px;
-  box-sizing: border-box;
-}
-
 #content {
   width: 600px;
   border: 6px double black;
@@ -84,16 +72,6 @@ button {
 
 #sequencer-title {
   text-align: center;
-}
-#sequencer-sections-container {
-  background-color: #1ebbbb;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#sequencer-sections-selector-label {
-  margin-left: 6px;
 }
 #sequencer-transport-bar {
   display: flex;

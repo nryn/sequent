@@ -2,6 +2,7 @@
 
 function Sequencer(player) {
   this.player = player;
+  // this.toggledSection = toggledSection();
 };
 
 Sequencer.prototype.play = function() {
@@ -120,14 +121,14 @@ Sequencer.prototype.showSongInfo = function(song) {
   heading.innerHTML = "'" + song.name + "'";
   titleArea.appendChild(heading);
 
-  const sectionsMenu = document.getElementById('sequencer-sections-selector');
-  removeAllChildren(sectionsMenu);
-  song.structure.forEach(function(namedSection) {
-    let sectionHolder = document.createElement('button');
-    sectionHolder.classList.add('section-button');
-    sectionHolder.innerHTML = namedSection;
-    sectionHolder.setAttribute("onclick", "sequentPlayer.sequencer.showSection('" + namedSection + "')")
-    sectionsMenu.appendChild(sectionHolder);
+  const sectionDropdown = document.getElementById('sequencer-transport-bar-section-selector');
+  removeAllChildren(sectionDropdown);
+  sectionDropdown.setAttribute("onchange", "sequentPlayer.sequencer.showSection(this.value)")
+  song.structure.forEach(function(sectionLetter) {
+    let sectionOption = document.createElement('option');
+    sectionOption.innerHTML = sectionLetter;
+    sectionOption.setAttribute("value", sectionLetter)
+    sectionDropdown.appendChild(sectionOption);
   });
 
   const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
@@ -147,7 +148,6 @@ Sequencer.prototype.showSection = function(sectionLetter) {
 };
 
 Sequencer.prototype.showInstrument = function(instrument) {
-  console.log('here')
   this.renderGridArea(this.player.currentSong, this.currentOnscreenPhrase, instrument);
 };
 
