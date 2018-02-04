@@ -59,34 +59,31 @@
   <body>
     <div id="container">
       <h1>sequent</h1>
-      <div id="workspace-toggle">
-        <label class="switch">
-          <input type="checkbox" id="workspace-toggle-switch">
-          <span class="slider round" text-after="playback" text-before="sequencer"></span>
-        </label>
+      <div id ="workspace-controls">
+        <button id="left-workspace-button" onClick="sequentPlayer.play();">▶</button>
+        <div id="workspace-toggle">
+          <label class="switch">
+            <input type="checkbox" id="workspace-toggle-switch">
+            <span class="slider round" text-after="playback" text-before="sequencer"></span>
+          </label>
+        </div>
+        <button id="right-workspace-button" onClick="sequentPlayer.load(exampleSong);">▼</button>
       </div>
       <div id="workspaces">
         <div id="playback-workspace" class="playback workspace">
-          <div id="playback-menu" class="playback menu">
-            <button onClick="sequentPlayer.play();">play</button>
-            <button onClick="sequentPlayer.load(exampleSong);">load</button>
-          </div>
           <table id="playback-grid" class="collapsed"></table>
         </div>
         <div id="sequencer-workspace" class="sequencer workspace">
-          <div id="sequencer-menu" class="sequencer menu">
-            <button onClick="sequentPlayer.sequencer.createSong();">new</button>
-            <button onClick="sequentPlayer.load(exampleSong);">load</button>
-          </div>
           <div id="sequencer-song-controls" class="sequencer song-controls">
             <div id="sequencer-title" class="sequencer title"></div>
             <div id="sequencer-sections-menu" class="sequencer sections-menu">
               <div id="sequencer-sections-container">
-                <span id="sequencer-sections-selector-label">Sections : </span>
+                <span id="sequencer-sections-selector-label">Song Structure :  </span>
                 <div id="sequencer-sections-selector"></div>
               </div>
             </div>
             <div id="sequencer-transport-bar" class="sequencer transport-bar">
+              <select id="sequencer-transport-bar-section-selector"></select>
               <select id="sequencer-transport-bar-instrument-selector"></select>
               <button onClick="sequentPlayer.play();">play</button>
               <button onClick="sequentPlayer.save();">save</button>
@@ -102,14 +99,22 @@
       let workspaceContainer = document.getElementById("workspaces");
       let playbackWorkspace = document.getElementById("playback-workspace");
       let sequencerWorkspace = document.getElementById("sequencer-workspace");
+      let leftWorkspaceButton = document.getElementById("left-workspace-button");
       workspaceToggle.addEventListener("change", swipeToWorkspace, false);
       function swipeToWorkspace() {
         if (workspaceToggle.checked) {
+          // go right
+          leftWorkspaceButton.innerHTML = "✚";
+          leftWorkspaceButton.removeAttribute("onclick")
+          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.sequencer.createSong();")
           workspaceContainer.style.marginLeft = "-50%";
           workspaceContainer.style.marginRight = "0%";
           playbackWorkspace.style.opacity = "0";
           sequencerWorkspace.style.opacity = "1";
         } else {
+          leftWorkspaceButton.innerHTML = "▶";
+          leftWorkspaceButton.removeAttribute("onclick")
+          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.play();")
           workspaceContainer.style.marginLeft = "0%";
           workspaceContainer.style.marginRight = "-50%";
           playbackWorkspace.style.opacity = "1";

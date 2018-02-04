@@ -70,6 +70,18 @@ button {
   transition:opacity 0.4s;
 }
 
+#workspace-controls {
+  display: flex;
+  align-items: center;
+}
+
+#workspace-controls > button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background-color: #e8ffff;
+}
+
 #sequencer-title {
   text-align: center;
 }
