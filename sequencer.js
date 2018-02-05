@@ -210,6 +210,22 @@ Sequencer.prototype.createSong = function() {
 
 };
 
+Sequencer.prototype.addBarToSong = function() {
+  let currentPhrase = this.player.currentSong.phrases[this.currentOnscreenPhrase];
+  let currentSection = this.currentOnscreenPhrase;
+  let currentInstrument = this.currentOnscreenInstrument;
+  let newBar = new Bar();
+  currentPhrase.addBar(newBar);
+  this.player.load(this.player.currentSong);
+  const sectionDropdown = document.getElementById('sequencer-transport-bar-section-selector');
+  const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
+  sectionDropdown.value = currentSection;
+  instrumentDropdown.value = currentInstrument;
+  this.showSection(currentSection);
+  this.showInstrument(currentInstrument);
+};
+
+
 function removeAllChildren(parentNode) {
   while (parentNode.hasChildNodes()) {
     parentNode.removeChild(parentNode.lastChild);
