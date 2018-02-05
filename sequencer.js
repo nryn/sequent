@@ -2,11 +2,27 @@
 
 function Sequencer(player) {
   this.player = player;
-  // this.toggledSection = toggledSection();
 };
 
-Sequencer.prototype.play = function() {
-
+Sequencer.prototype.playPhrase = function() {
+  if (this.currentOnscreenPhrase && this.currentOnscreenInstrument) {
+    this.phraseNoteBuffer = this.getPhraseNotesForInstrument(this.currentOnscreenPhrase, this.currentOnscreenInstrument);
+    let noteCounter = 0; // we'll compare this to total number of notes in the phrase, in order to know when it ends.
+    let semiquaverTiming = songBpmToSemiquaverMilliseconds(this.player.currentSong.tempo); // figure out smallest note timing based on the overall song tempo
+    let expectedTiming = Date.now() + semiquaverTiming; // expect a semiquaver to be as long as a semiquaver
+    setTimeout(playThroughNotes.bind(this), semiquaverTiming); // wait a semiquaver, then play a note
+    function playThroughNotes() {
+      let drift = Date.now() - expectedTiming; // check again, how long did it really take to step in to this function?
+      if (drift > semiquaverTiming) { // shouldn't happen.
+          throw "Can't reliably play back. The window might be inactive.";
+      };
+      this.renderPlaybackEffect(noteCounter, this.phraseNoteBuffer[noteCounter++]); // this key line sends the notes to be rendered in the grid
+      expectedTiming += semiquaverTiming; // add another semiquaver's worth, so we try to predict the time of our next loop
+      if (noteCounter < this.phraseNoteBuffer.length) {
+        setTimeout(playThroughNotes.bind(this), Math.max(0, semiquaverTiming - drift)); // settingTimeout to the same setTimeout callback we're already inside, creating a loop. takes into account drift
+      };
+    };
+  };
 };
 
 Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, currentOnscreenInstrument) {
@@ -15,6 +31,9 @@ Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, curre
 
   let sequencerTable = document.getElementById('sequencer-grid');
   while (sequencerTable.hasChildNodes()) {
+    while (sequencerTable.lastChild.hasChildNodes()) {
+      sequencerTable.lastChild.removeChild(sequencerTable.lastChild.lastChild)
+    }
     sequencerTable.removeChild(sequencerTable.lastChild); // let's empty the grid before rendering it, just in case
   };
 
@@ -78,7 +97,7 @@ Sequencer.prototype.drawLoadedNotes = function(currentOnscreenPhrase, currentOns
           if (note.instrument == instrument) {
             let cell = document.getElementById(note.note + "_bar" + (parseInt(bar) + 1) + "_beat" + beat + "_semi" + semiquaver);
             let fillerDiv = document.createElement('div');
-            fillerDiv.classList.add('seq_filler');
+            fillerDiv.classList.add('seq-filler');
             cell.appendChild(fillerDiv);
           };
         });
@@ -149,6 +168,42 @@ Sequencer.prototype.showSection = function(sectionLetter) {
 
 Sequencer.prototype.showInstrument = function(instrument) {
   this.renderGridArea(this.player.currentSong, this.currentOnscreenPhrase, instrument);
+};
+
+Sequencer.prototype.getPhraseNotesForInstrument = function(phraseLetter, instrument) {
+  let phraseNoteList = [];
+  this.player.currentSong.phrases[phraseLetter].bars.forEach(function(bar){
+    for (var i = 1; i <= bar.timeSig.beatCount; i++) {
+      phraseNoteList.push(bar.beats[i][1]);
+      phraseNoteList.push(bar.beats[i][2]);
+      phraseNoteList.push(bar.beats[i][3]);
+      phraseNoteList.push(bar.beats[i][4]);
+    };
+  });
+  return filterForCurrentInstrument(phraseNoteList, instrument);
+};
+
+const filterForCurrentInstrument = function (phraseNoteList, instrument) {
+  return phraseNoteList.map(function(semiquaverNoteData){
+    return semiquaverNoteData.filter(function(noteData){
+      return noteData.instrument == instrument;
+    });
+  });
+};
+
+Sequencer.prototype.renderPlaybackEffect = function(frameNumber, noteList) {
+  let tempo = this.player.currentSong.tempo;
+  let noteInScale = this.player.currentSong.scale;
+  noteInScale.forEach(function(scaleNote) {
+    let cell = document.getElementsByClassName(scaleNote + " seq_note_row")[0].cells[frameNumber];
+    let fillerDiv = document.createElement('div');
+    fillerDiv.classList.add('white-filler');
+    cell.appendChild(fillerDiv);
+    fillerDiv.classList.add('triggered');
+    setTimeout(function() {
+      cell.removeChild(fillerDiv);
+    }, 400); // remove element after arbitrary timeout
+  });
 };
 
 Sequencer.prototype.createSong = function() {
