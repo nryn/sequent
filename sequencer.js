@@ -210,6 +210,26 @@ Sequencer.prototype.createSong = function() {
 
 };
 
+Sequencer.prototype.saveSong = function() {
+  let d = new Date();
+  let filename = "Sequent_Song_" + this.player.currentSong.name + "_" + d.getHours() + "_" + d.getMinutes() + "_" + d.toDateString().split(' ').join('_');
+  let encodedSong = this.encodeCurrentSong();
+  var dlElement = document.createElement('a');
+  dlElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodedSong);
+  dlElement.setAttribute('download', filename + ".sqnt");
+
+  dlElement.style.display = 'none';
+  document.body.appendChild(dlElement);
+
+  dlElement.click();
+
+  document.body.removeChild(dlElement);
+};
+
+Sequencer.prototype.encodeCurrentSong = function() {
+  return btoa(JSON.stringify(this.player.currentSong));
+};
+
 Sequencer.prototype.addBarToSong = function() {
   let currentPhrase = this.player.currentSong.phrases[this.currentOnscreenPhrase];
   let currentSection = this.currentOnscreenPhrase;
