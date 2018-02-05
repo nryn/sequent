@@ -70,6 +70,52 @@ button {
   background-color: #e8ffff;
 }
 
+#load-song-dialogue-box {
+  margin-top: 0px;
+  transform-origin: 50% 15%;
+  transform: scaleY(0);
+  transition-timing-function: ease;
+  transition:all 0.5s;
+}
+
+#dialogue-text {
+  position: relative;
+  text-align: center;
+}
+
+#load-sqnt-textarea {
+  margin: 10px 4px;
+  padding: 20px;
+  width: 100%;
+  border: 0px;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  box-sizing: border-box;
+  min-height: 100px;
+}
+
+#load-sqnt-button {
+  position: absolute;
+  right: 0;
+  top: 62px;
+  background-color: #1bbbbb;
+  border: 0;
+  color: paleturquoise;
+}
+
+hr {
+  border: 1px solid #1bbbbb;
+  margin: 20px;
+  width: 610px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #1bbbbb;
+    opacity: 1; /* Firefox */
+}
+
 #sequencer-title {
   text-align: center;
 }
@@ -78,6 +124,7 @@ button {
   justify-content: center;
 }
 #sequencer-song-controls {
+  transform-origin: 50% 15%;
   transform: scaleY(0);
   transition-timing-function: ease;
   transition:transform 0.5s;

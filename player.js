@@ -7,7 +7,35 @@ function Player() {
   this.sequencer = new Sequencer(this);
 };
 
+Player.prototype.loadSongDialogue = function() {
+  let dialogueBox = document.getElementById('load-song-dialogue-box');
+  if (dialogueBox.classList.contains('loadDialogueCollapsed')) {
+    expandSongDialogueArea(dialogueBox);
+  }
+  else {
+    collapseSongDialogueArea(dialogueBox);
+  }
+};
+
+function expandSongDialogueArea(dialogueBox) {
+  dialogueBox.style.marginTop = "0px";
+  dialogueBox.classList.remove('loadDialogueCollapsed');
+  setTimeout(function() {
+    dialogueBox.style.transform = "scaleY(1)"
+  }, 250)
+};
+
+function collapseSongDialogueArea(dialogueBox) {
+  dialogueBox.style.transform = "scaleY(0)"
+  dialogueBox.classList.add('loadDialogueCollapsed');
+  setTimeout(function() {
+    dialogueBox.style.marginTop = "-" + dialogueBox.clientHeight + "px";
+  }, 400)
+};
+
 Player.prototype.load = function(song) {
+  let dialogueBox = document.getElementById('load-song-dialogue-box')
+  collapseSongDialogueArea(dialogueBox);
   this.clear();
   this.currentSong = song;
   let sections = song.structure;
