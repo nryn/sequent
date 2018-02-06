@@ -1,13 +1,15 @@
 'use strict'
 
-function Song(phrases = {}, tempo = 120, keySignature = "Cmaj", name = "Untitled") {
+function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.name = name;
   this.tempo = tempo;
   this.keySignature = keySignature;
   this.structure = [];
   this.getInstrumentList = this.searchForInstruments;
-  this.phrases = phrases;
+  this.phrases = {};
   this.scale = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
+  this.sectionMap=new WeakMap;
+  this.sectionLetter = "A".charCodeAt(0) - 1;
 }
 
 Song.prototype.searchForInstruments = function () {
@@ -28,13 +30,12 @@ Song.prototype.searchForInstruments = function () {
   };
 
   iterateOverObject(this.phrases);
-  return instrumentList;
+  return instrumentList.length == 0 ? ["Piano"] : instrumentList; // always have a Piano ready if there aren't any instruments being used at all
 };
 
-let sectionMap=new WeakMap, sectionLetter = "A".charCodeAt(0) - 1;
 Song.prototype.generateSection = function(phrase) {
-  if (!sectionMap.has(phrase)) sectionMap.set(phrase,++sectionLetter);
-  return String.fromCharCode(sectionMap.get(phrase));
+  if (!this.sectionMap.has(phrase)) this.sectionMap.set(phrase,++this.sectionLetter);
+  return String.fromCharCode(this.sectionMap.get(phrase));
 };
 
 Song.prototype.addPhrase = function() {
