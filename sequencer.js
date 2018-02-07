@@ -206,19 +206,10 @@ Sequencer.prototype.renderPlaybackEffect = function(frameNumber, noteList) {
   });
 };
 
-Sequencer.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
-  if (JSON.stringify(this.player.currentSong) == "{}") {
-    let tempo = givenTempo;
-    let name = givenName;
-    let timeSig = [4, 4];
-    let song = new Song(name, tempo);
-    song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));
-    this.player.currentSong = song; // too magic?
-    this.player.load(song);
-  } else {
-    this.player.clear();
-    this.createSong();
-  }
+Sequencer.prototype.createSongFromForm = function() {
+  let songName = document.getElementById('song-name').value;
+  let tempo = document.getElementById('tempo-input').value;
+  this.player.createSong(songName, tempo);
 };
 
 Sequencer.prototype.saveSong = function() {

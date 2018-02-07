@@ -70,12 +70,38 @@ button {
   background-color: #e8ffff;
 }
 
-#load-song-dialogue-box {
+input#song-name {
+  padding: 8px;
+  border: 0px;
+  border-radius: 5px;
+  background-color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+}
+
+#load-song-dialogue-box, #create-song-dialogue-box {
   margin-top: 0px;
   transform-origin: 50% 15%;
   transform: scaleY(0);
   transition-timing-function: ease;
   transition:all 0.5s;
+}
+
+#create-song-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#create-song-form > input {
+  width: 100%;
+  margin: 20px 0px;
+}
+
+#create-sqnt-button {
+  background-color: #1bbbbb;
+  border: 0;
+  color: paleturquoise;
 }
 
 #dialogue-text {
@@ -256,7 +282,7 @@ div.white-filler {
   border-radius: 10px;
 }
 div.white-filler.triggered {
-  animation: washOut 400ms;
+  animation: washOut 500ms;
 }
 
 /* The top switch - the box around the slider */

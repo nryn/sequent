@@ -7,9 +7,9 @@ function Player() {
   this.sequencer = new Sequencer(this);
 };
 
-Player.prototype.loadSongDialogue = function() {
-  let dialogueBox = document.getElementById('load-song-dialogue-box');
-  if (dialogueBox.classList.contains('loadDialogueCollapsed')) {
+Player.prototype.toggleSongDialogue = function(typeOfDialogue) {
+  let dialogueBox = document.getElementById(typeOfDialogue + '-song-dialogue-box');
+  if (dialogueBox.classList.contains('collapsed')) {
     expandSongDialogueArea(dialogueBox);
   }
   else {
@@ -19,7 +19,15 @@ Player.prototype.loadSongDialogue = function() {
 
 function expandSongDialogueArea(dialogueBox) {
   dialogueBox.style.marginTop = "0px";
-  dialogueBox.classList.remove('loadDialogueCollapsed');
+  dialogueBox.classList.remove('collapsed');
+  setTimeout(function() {
+    dialogueBox.style.transform = "scaleY(1)"
+  }, 250)
+};
+
+function expandSongDialogueArea(dialogueBox) {
+  dialogueBox.style.marginTop = "0px";
+  dialogueBox.classList.remove('collapsed');
   setTimeout(function() {
     dialogueBox.style.transform = "scaleY(1)"
   }, 250)
@@ -27,15 +35,17 @@ function expandSongDialogueArea(dialogueBox) {
 
 function collapseSongDialogueArea(dialogueBox) {
   dialogueBox.style.transform = "scaleY(0)"
-  dialogueBox.classList.add('loadDialogueCollapsed');
+  dialogueBox.classList.add('collapsed');
   setTimeout(function() {
     dialogueBox.style.marginTop = "-" + dialogueBox.clientHeight + "px";
   }, 400)
 };
 
 Player.prototype.load = function(song) {
-  let dialogueBox = document.getElementById('load-song-dialogue-box')
-  collapseSongDialogueArea(dialogueBox);
+  let loadDialogue = document.getElementById('load-song-dialogue-box');
+  let createDialogue = document.getElementById('create-song-dialogue-box');
+  collapseSongDialogueArea(loadDialogue);
+  collapseSongDialogueArea(createDialogue);
   this.clear();
   this.currentSong = song;
   let sections = song.structure;
@@ -64,4 +74,19 @@ Player.prototype.clear = function() {
 
 Player.prototype.play = function() {
   this.visualiser.play();
+};
+
+Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
+  if (JSON.stringify(this.currentSong) == "{}") {
+    let tempo = givenTempo;
+    let name = givenName;
+    let timeSig = [4, 4];
+    let song = new Song(name, tempo);
+    song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));
+    this.currentSong = song; // too magic?
+    this.load(song);
+  } else {
+    this.clear();
+    this.createSong(givenName, givenTempo);
+  }
 };

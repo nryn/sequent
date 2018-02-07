@@ -67,9 +67,24 @@
             <span class="slider round" text-after="playback" text-before="sequencer"></span>
           </label>
         </div>
-        <button id="right-workspace-button" onClick="sequentPlayer.loadSongDialogue();">▼</button>
+        <button id="right-workspace-button" onClick="sequentPlayer.toggleSongDialogue('load');">▼</button>
       </div>
-      <div id="load-song-dialogue-box" class="loadDialogueCollapsed">
+      <div id="create-song-dialogue-box" class="collapsed">
+        <div id ="dialogue-text">
+          <p>creating a new song.</p>
+          <p>any unsaved changes to your current song will be lost.</p>
+          <hr>
+          <form id="create-song-form">
+            <label for="song-name">song name : </label>
+            <input type="text" id="song-name" placeholder="The Best Song in the World">
+            <label for="tempo-input">tempo : </label><span id="tempo-value"></span>
+            <input type="range" id="tempo-input" min="60" max="150" step="5">
+            <button type="button" id="create-sqnt-button" onClick="sequentPlayer.sequencer.createSongFromForm()">create song</button>
+          </form>
+          <hr>
+        </div>
+      </div>
+      <div id="load-song-dialogue-box" class="collapsed">
         <div id ="dialogue-text">
           <textarea id="load-sqnt-textarea" placeholder="If you have a previously-saved .sqnt file, please paste its contents in this text box."></textarea>
           <button id="load-sqnt-button" onClick="sequentPlayer.load(exampleSong)">load</button>
@@ -107,7 +122,7 @@
           // go right
           leftWorkspaceButton.innerHTML = "✚";
           leftWorkspaceButton.removeAttribute("onclick")
-          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.sequencer.createSong();")
+          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.toggleSongDialogue('create');")
           workspaceContainer.style.marginLeft = "-50%";
           workspaceContainer.style.marginRight = "0%";
           playbackWorkspace.style.opacity = "0";
@@ -122,6 +137,17 @@
           sequencerWorkspace.style.opacity = "0";
         };
       };
+      let loadDialogue = document.getElementById('load-song-dialogue-box');
+      let createDialogue = document.getElementById('create-song-dialogue-box');
+      collapseSongDialogueArea(loadDialogue);
+      collapseSongDialogueArea(createDialogue);
+
+      let slider = document.getElementById("tempo-input");
+      let output = document.getElementById("tempo-value");
+      output.innerHTML = slider.value;
+      slider.oninput = function() {
+          output.innerHTML = this.value;
+      }
     </script>
   </body>
 </html>
