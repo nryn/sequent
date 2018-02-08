@@ -63,7 +63,7 @@ button {
   align-items: center;
 }
 
-#workspace-controls > button {
+#workspace-controls > button, #sequencer-transport-bar-section-controls > button, #sequencer-transport-bar-instrument-controls > button {
   width: 34px;
   height: 34px;
   border: 0;
@@ -382,4 +382,99 @@ input:checked + .slider:after {
   #container {
     width: 100%;
   }
+}
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+
+    /*fix for FF unable to apply focus style bug */
+    /* border: 1px solid white; */
+
+    /*required for proper track sizing in FF*/
+    /* width: 300px; */
+
+    -webkit-appearance: none;
+    margin: 10px 0px;
+    background-color: transparent;
+    border-color: transparent;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #1bbbbb;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #1bbbbb;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #1bbbbb;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #1bbbbb;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #1bbbbb;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid #1bbbbb;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #1bbbbb;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #1bbbbb;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #1bbbbb;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #1bbbbb;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #1bbbbb;
 }
