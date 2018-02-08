@@ -91,7 +91,7 @@
       <div id="load-song-dialogue-box" class="collapsed">
         <div id ="dialogue-text">
           <textarea id="load-sqnt-textarea" placeholder="If you have a previously-saved .sqnt.txt file, please paste its contents in this text box."></textarea>
-          <button id="load-sqnt-button" onClick="sequentPlayer.load(exampleSong)">load</button>
+          <button id="load-sqnt-button" onClick="sequentPlayer.unpackEncodedSong()">load</button>
           <hr>
         </div>
       </div>
@@ -103,8 +103,16 @@
           <div id="sequencer-song-controls" class="sequencer song-controls">
             <div id="sequencer-title" class="sequencer title"></div>
             <div id="sequencer-transport-bar" class="sequencer transport-bar">
-              <select id="sequencer-transport-bar-section-selector"></select>
-              <select id="sequencer-transport-bar-instrument-selector"></select>
+              <div id="sequencer-transport-bar-section-controls">
+                <select id="sequencer-transport-bar-section-selector"></select>
+                <button onClick="sequentPlayer.sequencer.addPhrase();">✚</button>
+                <button onClick="sequentPlayer.sequencer.removePhrase();">✖</button>
+              </div>
+              <div id="sequencer-transport-bar-instrument-controls">
+                <select id="sequencer-transport-bar-instrument-selector"></select>
+                <button onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
+                <button onClick="sequentPlayer.sequencer.removeInstrument();">✖</button>
+              </div>
               <button onClick="sequentPlayer.sequencer.playPhrase();">▶</button>
               <button onClick="sequentPlayer.sequencer.saveSong();">save</button>
               <button onClick="sequentPlayer.sequencer.addBarToSong();">add bar</button>
