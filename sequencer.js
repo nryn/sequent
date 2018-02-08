@@ -25,6 +25,28 @@ Sequencer.prototype.playPhrase = function() {
   };
 };
 
+Sequencer.prototype.toggleNote = function(noteElement) {
+  let notePositionInfo = noteElement.id.split('_');
+  let note = notePositionInfo[0];
+  let barNo = notePositionInfo[1].substring(notePositionInfo[1].length -1);
+  let beatNo = notePositionInfo[2].substring(notePositionInfo[2].length -1);
+  let semiNo = notePositionInfo[3].substring(notePositionInfo[3].length -1);
+  let toggledNoteList = this.player.currentSong.phrases[this.currentOnscreenPhrase].bars[barNo - 1].beats[beatNo][semiNo]
+  let currentInstrument = this.currentOnscreenInstrument;
+  if (noteElement.lastChild) { // if the note was already toggled do this to remove the note:
+    noteElement.removeChild(noteElement.lastChild)
+    let noteListOnceRemoved = toggledNoteList.filter(function(note) {
+      return note.instrument !== currentInstrument;
+    });
+    this.player.currentSong.phrases[this.currentOnscreenPhrase].bars[barNo - 1].beats[beatNo][semiNo] = noteListOnceRemoved;
+  } else { // or else do this to add the note:
+    let fillerDiv = document.createElement('div');
+    fillerDiv.classList.add('seq-filler');
+    noteElement.appendChild(fillerDiv);
+    toggledNoteList.push(new Note(this.currentOnscreenInstrument, note));
+  }
+};
+
 Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, currentOnscreenInstrument) {
   this.currentOnscreenPhrase = currentOnscreenPhrase;
   this.currentOnscreenInstrument = currentOnscreenInstrument;
@@ -52,6 +74,7 @@ Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, curre
         noteCell.classList.add("beat" + i);
         noteCell.classList.add("seq_note_cell");
         noteCell.classList.add("collapsed");
+        noteCell.setAttribute("onClick", "sequentPlayer.sequencer.toggleNote(this);")
         if (barCounter % 2 == 0) {
           noteCell.classList.add("strike");
         }
@@ -252,4 +275,30 @@ function removeAllChildren(parentNode) {
   while (parentNode.hasChildNodes()) {
     parentNode.removeChild(parentNode.lastChild);
   };
+};
+
+Sequencer.prototype.addPhrase = function() {
+  let phraseToAdd = new Phrase();
+  let firstBarForPhrase = new Bar();
+  phraseToAdd.addBar(firstBarForPhrase);
+  this.player.currentSong.addPhrase(phraseToAdd);
+  this.player.load(this.player.currentSong);
+  let sectionSelector = document.getElementById('sequencer-transport-bar-section-selector')
+  sectionSelector.value = sectionSelector.options[sectionSelector.options.length - 1].value;
+};
+
+Sequencer.prototype.removePhrase = function() {
+  let selectedPhrase = document.getElementById('sequencer-transport-bar-section-selector').selectedIndex;
+  this.player.currentSong.structure.splice(selectedPhrase, 1);
+  this.player.load(this.player.currentSong);
+};
+
+Sequencer.prototype.addInstrument = function() {
+  console.log("addInstrument called");
+  let selectedInstrument = document.getElementById('sequencer-transport-bar-instrument-selector')
+};
+
+Sequencer.prototype.removeInstrument = function() {
+  console.log("removeInstrument called");
+  let selectedInstrument = document.getElementById('sequencer-transport-bar-instrument-selector')
 };
