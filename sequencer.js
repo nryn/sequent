@@ -218,7 +218,7 @@ Sequencer.prototype.saveSong = function() {
   let encodedSong = this.encodeCurrentSong();
   var dlElement = document.createElement('a');
   dlElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodedSong);
-  dlElement.setAttribute('download', filename + ".sqnt");
+  dlElement.setAttribute('download', filename + ".sqnt.txt");
 
   dlElement.style.display = 'none';
   document.body.appendChild(dlElement);
