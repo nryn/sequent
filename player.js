@@ -90,3 +90,36 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
     this.createSong(givenName, givenTempo);
   }
 };
+
+Player.prototype.unpackEncodedSong = function() {
+  let decodedSongData = atob(document.getElementById('load-sqnt-textarea').value);
+  let loadedSongData = JSON.parse(decodedSongData) || {};
+  if (loadedSongData == "{}" || !loadedSongData.name) {
+    alert("sequent did not understand the song you are trying to load. sorry.");
+  }
+  else {
+    let loadedSong = new Song(loadedSongData.name, loadedSongData.tempo, loadedSongData.keySignature)
+    for (var phrase in loadedSongData.phrases) {
+      let currentPhraseData = loadedSongData.phrases[phrase];
+      let currentLoadingPhrase = new Phrase();
+      for (var bar in currentPhraseData.bars) {
+        let currentBarData = currentPhraseData.bars[bar];
+        let currentLoadingBar = new Bar(currentBarData.timeSig.beatCount, currentBarData.timeSig.beatUnit);
+        for (var beat in currentBarData.beats) {
+          let currentBeatData = currentBarData.beats[beat];
+          for (var semi in currentBeatData) {
+            let currentSemiData = currentBeatData[semi];
+            for (var note in currentSemiData) {
+              let currentNoteData = currentSemiData[note];
+              let currentLoadingNote = new Note(currentNoteData.instrument , currentNoteData.note);
+              currentLoadingBar.beats[beat][semi].push(currentLoadingNote);
+            };
+          };
+        };
+        currentLoadingPhrase.addBar(currentLoadingBar)
+      };
+      loadedSong.addPhrase(currentLoadingPhrase);
+    };
+    this.load(loadedSong);
+  };
+};
