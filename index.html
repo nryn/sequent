@@ -70,14 +70,18 @@
         <button id="right-workspace-button" onClick="sequentPlayer.toggleSongDialogue('load');">▼</button>
       </div>
       <div id="create-song-dialogue-box" class="collapsed">
+        <div id="overwrite-dialogue-box" class="collpased">
+          <div id ="dialogue-text">
+            <p>creating a new song.</p>
+            <p>any unsaved changes to your current song will be lost.</p>
+            <hr>
+          </div>
+        </div>
         <div id ="dialogue-text">
-          <p>creating a new song.</p>
-          <p>any unsaved changes to your current song will be lost.</p>
-          <hr>
           <form id="create-song-form">
             <label for="song-name">song name : </label>
             <input type="text" id="song-name" placeholder="The Best Song in the World">
-            <label for="tempo-input">tempo : </label><span id="tempo-value"></span>
+            <label for="tempo-input">tempo : <span id="tempo-value"></span></label>
             <input type="range" id="tempo-input" min="60" max="150" step="5">
             <button type="button" id="create-sqnt-button" onClick="sequentPlayer.sequencer.createSongFromForm()">create song</button>
           </form>
@@ -144,6 +148,7 @@
 
       let slider = document.getElementById("tempo-input");
       let output = document.getElementById("tempo-value");
+      slider.defaultValue = 120;
       output.innerHTML = slider.value;
       slider.oninput = function() {
           output.innerHTML = this.value;

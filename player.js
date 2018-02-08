@@ -79,7 +79,7 @@ Player.prototype.play = function() {
 Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
   if (JSON.stringify(this.currentSong) == "{}") {
     let tempo = givenTempo;
-    let name = givenName;
+    let name = givenName || "The Best Song in the World";
     let timeSig = [4, 4];
     let song = new Song(name, tempo);
     song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));

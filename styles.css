@@ -70,6 +70,10 @@ button {
   background-color: #e8ffff;
 }
 
+label {
+  margin: 1em 0;
+}
+
 input#song-name {
   padding: 8px;
   border: 0px;
@@ -95,7 +99,6 @@ input#song-name {
 
 #create-song-form > input {
   width: 100%;
-  margin: 20px 0px;
 }
 
 #create-sqnt-button {
