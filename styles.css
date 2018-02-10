@@ -1,9 +1,18 @@
 body{
   font-family: 'Comfortaa', 'verdana', san-serif;
-  background: linear-gradient(#e8ffff, #1bbbbb);
+  background: linear-gradient(70deg, #1bbbbb, #e8ffff);
   display: flex;
   justify-content: center;
-  margin-top: 10em;
+  margin-top: 1em;
+}
+
+h2 {
+  margin: 0px 0px 10px 0px;
+}
+
+#nav {
+  display: flex;
+  align-items: center;
 }
 
 #container {
@@ -18,15 +27,16 @@ body{
 }
 
 button {
-  margin: 10px 4px;
-  width: 120px;
-  border: 2px solid black;
+  margin: 6px 4px;
+  width: 100px;
+  border: 0;
   border-radius: 5px;
   background-color: paleturquoise;
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
   padding-top: 5px;
   box-sizing: border-box;
+  color: #1bbbbb;
 }
 
 #content {
@@ -63,11 +73,45 @@ button {
   align-items: center;
 }
 
-#workspace-controls > button, #sequencer-transport-bar-section-controls > button, #sequencer-transport-bar-instrument-controls > button {
+#workspace-controls > button {
   width: 34px;
   height: 34px;
   border: 0;
   background-color: #e8ffff;
+}
+
+.add-remove-conrols {
+  display: flex;
+}
+
+.add-remove-conrols > button {
+  width: 45%;
+  height: 34px;
+  border: 0;
+  background-color: #e8ffff;
+  margin: 6px 4px 0px 4px;
+  color: #1bbbbb;
+}
+
+#instrument-add-controls .add-remove-conrols > button {
+  background-color: #1bbbbb;
+  color: #e8ffff;
+}
+
+.transport-label {
+  margin: 0;
+  padding: 4px 0px 6px 2px;
+}
+
+
+#sequencer-transport-bar-section-controls, #sequencer-transport-bar-instrument-controls {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid paleturquoise;
+  border-radius: 7px;
+  background: paleturquoise;
+  padding: 5px;
+  margin: 0px 4px;
 }
 
 label {
@@ -81,6 +125,22 @@ input#song-name {
   background-color: paleturquoise;
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
+}
+
+input#add-instrument-text {
+  padding: 8px;
+  border: 0px;
+  border-radius: 5px;
+  background-color: #1bbbbb;
+  color: paleturquoise;
+  font-family: 'Comfortaa', 'verdana', san-serif;
+  font-size: 100%;
+  width: 140px;
+  height: 30px;
+}
+input#add-instrument-text::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: paleturquoise;
+    opacity: 1; /* Firefox */
 }
 
 #load-song-dialogue-box, #create-song-dialogue-box {
@@ -99,6 +159,10 @@ input#song-name {
 
 #create-song-form > input {
   width: 100%;
+}
+
+form#instrument-add-controls {
+  margin-bottom: 0px;
 }
 
 #create-sqnt-button {
@@ -159,12 +223,18 @@ hr {
   transition:transform 0.5s;
 }
 
+#transport-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 select {
-  margin: 10px 4px;
-  width: 120px;
-  border: 2px solid black;
+  width: 140px;
+  border: 2px solid;
   border-radius: 5px;
   background-color: paleturquoise;
+  color: #1bbbbb;
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
   padding-top: 5px;
@@ -175,6 +245,7 @@ select {
 /* Things to do with the main grid system*/
 
 table {
+  margin-top: 10px;
   border-radius: 10px;
   padding: 2px;
   border: 2px solid black;
@@ -305,7 +376,7 @@ div.white-filler.triggered {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: #e8ffff;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -322,6 +393,7 @@ div.white-filler.triggered {
   transition: .4s;
   display: inline;
   text-align: center;
+  color: #1bbbbb;
 }
 .slider:after {
   content: attr(text-after);
@@ -331,11 +403,12 @@ div.white-filler.triggered {
   width: 45%;
   left: 4px;
   bottom: 4px;
-  background-color: #e8ffff;
+  background-color: #1bbbbb;
   -webkit-transition: .4s;
   transition: .4s;
   display: inline;
   text-align: center;
+  color: #e8ffff;
 }
 input:checked + .slider {
   background-color: #1bbbbb;
