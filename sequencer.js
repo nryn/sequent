@@ -317,10 +317,19 @@ Sequencer.prototype.addInstrument = function() {
   this.collapseAddInstrumentDialogue();
   this.showInstrument(newInstrument);
   this.currentOnscreenInstrument = newInstrument;
-  this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we add a new column to the visualiser area too
+  this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we re-render the visualiser area
 };
 
 Sequencer.prototype.removeInstrument = function() {
-  console.log("removeInstrument called");
-  let selectedInstrument = document.getElementById('sequencer-transport-bar-instrument-selector')
+  let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
+  this.player.currentSong.removeNotesforInstrument(instrumentSelector.value);
+  instrumentSelector.childNodes.forEach(function(optionElement) {
+    if (optionElement.value == instrumentSelector.value) {
+      instrumentSelector.removeChild(optionElement);
+    };
+  });
+  instrumentSelector.value = instrumentSelector.firstChild.value;
+  this.currentOnscreenInstrument = instrumentSelector.value;
+  this.showInstrument(this.currentOnscreenInstrument);
+  this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we re-render the visualiser area
 };

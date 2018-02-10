@@ -73,3 +73,17 @@ Song.prototype.removePhrase = function(pos) {
 Song.prototype.duplicatePhrase = function(section) {
   this.structure.push(section);
 };
+
+Song.prototype.removeNotesforInstrument = function(instrumentToRemove) {
+  Object.keys(this.phrases).forEach(function(phrase) {
+    this.phrases[phrase].bars.forEach(function(bar, barIndex) {
+      Object.keys(this.phrases[phrase].bars[barIndex].beats).forEach(function(beat, beatIndex) {
+        Object.keys(this.phrases[phrase].bars[barIndex].beats[beatIndex + 1]).forEach(function(semi, semiIndex) {
+          this.phrases[phrase].bars[barIndex].beats[beatIndex + 1][semiIndex + 1] = this.phrases[phrase].bars[barIndex].beats[beatIndex + 1][semiIndex + 1].filter(function(note) {
+            return note.instrument == instrumentToRemove ? null : note;
+          }.bind(this));
+        }.bind(this));
+      }.bind(this));
+    }.bind(this));
+  }.bind(this));
+};
