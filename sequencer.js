@@ -159,7 +159,7 @@ Sequencer.prototype.showSongInfo = function(song) {
   songControlsArea.style.transform = "scaleY(0)"; // initially collapse song info area
   const titleArea = document.getElementById("sequencer-title");
   removeAllChildren(titleArea);
-  let heading = document.createElement('h1');
+  let heading = document.createElement('h2');
   heading.innerHTML = "'" + song.name + "'";
   titleArea.appendChild(heading);
 
@@ -293,9 +293,31 @@ Sequencer.prototype.removePhrase = function() {
   this.player.load(this.player.currentSong);
 };
 
+Sequencer.prototype.expandAddInstrumentDialogue = function() {
+  document.getElementById('instrument-select-controls').style.display = "none";
+  document.getElementById('instrument-add-controls').style.display = "block";
+};
+
+Sequencer.prototype.collapseAddInstrumentDialogue = function() {
+  document.getElementById('instrument-add-controls').style.display = "none";
+  document.getElementById('instrument-select-controls').style.display = "block";
+};
+
 Sequencer.prototype.addInstrument = function() {
   console.log("addInstrument called");
-  let selectedInstrument = document.getElementById('sequencer-transport-bar-instrument-selector')
+  let newInstrumentElement = document.getElementById('add-instrument-text');
+  let newInstrument = newInstrumentElement.value;
+  newInstrumentElement.value = "";
+  document.getElementById('add-instrument-text').value;
+  let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
+  let newOption = document.createElement("option")
+  newOption.setAttribute("value", newInstrument);
+  newOption.innerHTML = newInstrument;
+  instrumentSelector.appendChild(newOption)
+  instrumentSelector.value = newInstrument;
+  this.collapseAddInstrumentDialogue();
+  this.showInstrument(newInstrument);
+  this.currentOnscreenInstrument = newInstrument;
 };
 
 Sequencer.prototype.removeInstrument = function() {
