@@ -104,18 +104,35 @@
             <div id="sequencer-title" class="sequencer title"></div>
             <div id="sequencer-transport-bar" class="sequencer transport-bar">
               <div id="sequencer-transport-bar-section-controls">
+                <p class="transport-label">Section</p>
                 <select id="sequencer-transport-bar-section-selector"></select>
-                <button onClick="sequentPlayer.sequencer.addPhrase();">✚</button>
-                <button onClick="sequentPlayer.sequencer.removePhrase();">✖</button>
+                <div class="add-remove-conrols">
+                  <button onClick="sequentPlayer.sequencer.addPhrase();">✚</button>
+                  <button onClick="sequentPlayer.sequencer.removePhrase();">✖</button>
+                </div>
               </div>
               <div id="sequencer-transport-bar-instrument-controls">
-                <select id="sequencer-transport-bar-instrument-selector"></select>
-                <button onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
-                <button onClick="sequentPlayer.sequencer.removeInstrument();">✖</button>
+                <p class="transport-label">Instrument</p>
+                <div id="instrument-select-controls">
+                  <select id="sequencer-transport-bar-instrument-selector"></select>
+                  <div class="add-remove-conrols">
+                    <button onClick="sequentPlayer.sequencer.expandAddInstrumentDialogue();">✚</button>
+                    <button onClick="sequentPlayer.sequencer.removeInstrument();">✖</button>
+                  </div>
+                </div>
+                <form id="instrument-add-controls" style="display:none;">
+                  <input id="add-instrument-text" type="text" placeholder="e.g. Flute">
+                  <div class="add-remove-conrols">
+                    <button type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
+                    <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
+                  </div>
+                </form>
               </div>
+            </div>
+            <div id="transport-buttons">
               <button onClick="sequentPlayer.sequencer.playPhrase();">▶</button>
-              <button onClick="sequentPlayer.sequencer.saveSong();">save</button>
               <button onClick="sequentPlayer.sequencer.addBarToSong();">add bar</button>
+              <button onClick="sequentPlayer.sequencer.saveSong();">save</button>
             </div>
           </div>
           <table id="sequencer-grid" class="collapsed"></table>
