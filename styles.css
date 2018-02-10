@@ -169,6 +169,7 @@ form#instrument-add-controls {
   background-color: #1bbbbb;
   border: 0;
   color: paleturquoise;
+  width: 120px;
 }
 
 #dialogue-text {
