@@ -304,7 +304,6 @@ Sequencer.prototype.collapseAddInstrumentDialogue = function() {
 };
 
 Sequencer.prototype.addInstrument = function() {
-  console.log("addInstrument called");
   let newInstrumentElement = document.getElementById('add-instrument-text');
   let newInstrument = newInstrumentElement.value;
   newInstrumentElement.value = "";
@@ -318,6 +317,7 @@ Sequencer.prototype.addInstrument = function() {
   this.collapseAddInstrumentDialogue();
   this.showInstrument(newInstrument);
   this.currentOnscreenInstrument = newInstrument;
+  this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we add a new column to the visualiser area too
 };
 
 Sequencer.prototype.removeInstrument = function() {
