@@ -29,8 +29,17 @@ Song.prototype.searchForInstruments = function () {
     };
   };
 
+  function checkOnScreenInstruments() {
+    let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
+    instrumentSelector.childNodes.forEach(function(optionElement) {
+      instrumentList.push(optionElement.value);
+    });
+  }
+
   iterateOverObject(this.phrases);
-  return instrumentList.length == 0 ? ["Piano"] : instrumentList; // always have a Piano ready if there aren't any instruments being used at all
+  checkOnScreenInstruments();
+
+  return instrumentList.length == 0 ? ["Piano"] : instrumentList; // get the current instruments onscreen ready if there aren't any instruments being used at all
 };
 
 Song.prototype.generateSection = function(phrase) {
