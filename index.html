@@ -11,49 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa&amp;subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
     <script>
-    function createSong() {
-      const mySong = new Song();
-      const myPhrase = new Phrase();
-      const bOne = new Bar();
-      const bTwo = new Bar();
-      const bThree = new Bar(3,4);
-      const trumpetC = new Note("Trumpet", "C", 2, 4);
-      const vLongVocalG = new Note("Vocal", "G", 2, 1);
-      const vShortPiccoloA = new Note("Piccolo", "A", 2, 16);
-      const bassoonC = new Note("Bassoon", "C", 2, 4);
-      const shortPercE = new Note("Percussion", "E", 2, 8);
-      const shortViolinD = new Note("Violin", "D", 2, 8);
-      const celloA = new Note("Cello", "A", 2, 4);
-      const long808Bb = new Note("808", "Bb", 2, 2);
-      const vShortSynthFs = new Note("Synth", "F#", 2, 16);
-      const shortSamplerC = new Note("Sampler", "C", 2, 8);
-      const vLongGuitarB = new Note("Guitar", "B", 2, 1);
-      const longShamisenG = new Note("Shamisen", "G", 2, 2);
-      myPhrase.addBar(bOne, bTwo, bThree);
-      mySong.addPhrase(myPhrase);
-      bOne.beats[1][1].push(vLongVocalG);
-      bOne.beats[1][2].push(vShortSynthFs);
-      bOne.beats[1][3].push(longShamisenG);
-      bOne.beats[1][4].push(shortSamplerC);
-      bOne.beats[2][1].push(trumpetC);
-      bOne.beats[2][2].push(bassoonC);
-      bOne.beats[2][3].push(vShortPiccoloA);
-      bOne.beats[2][4].push(shortPercE);
-      bOne.beats[3][1].push(celloA);
-      bOne.beats[4][1].push(shortViolinD);
-      bTwo.beats[2][1].push(vLongGuitarB);
-      bTwo.beats[4][1].push(long808Bb);
-      bThree.beats[1][1].push(vShortSynthFs);
-      const mySecondPhrase = new Phrase();
-      mySong.addPhrase(mySecondPhrase);
-      mySecondPhrase.addBar(bThree);
-      mySong.duplicatePhrase('A');
-      return mySong;
-    };
-
-    let exampleSong = createSong(); // before we have our own sequencer to make songs effectively, this example song should be available globally shortly after page load
-    const sequentPlayer = new Player();
-
+      const sequentPlayer = new Player();
     </script>
   </head>
   <body>
