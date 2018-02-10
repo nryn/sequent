@@ -39,7 +39,11 @@ Song.prototype.searchForInstruments = function () {
   iterateOverObject(this.phrases);
   checkOnScreenInstruments();
 
-  return instrumentList.length == 0 ? ["Piano"] : instrumentList; // get the current instruments onscreen ready if there aren't any instruments being used at all
+  let uniqueInstrumentList = instrumentList.filter(function(value, index, self) {
+    return self.indexOf(value) === index;
+  });
+
+  return uniqueInstrumentList.length == 0 ? ["Piano"] : uniqueInstrumentList; // get the current instruments onscreen ready if there aren't any instruments being used at all
 };
 
 Song.prototype.generateSection = function(phrase) {
