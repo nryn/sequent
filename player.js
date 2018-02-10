@@ -25,14 +25,6 @@ function expandSongDialogueArea(dialogueBox) {
   }, 250)
 };
 
-function expandSongDialogueArea(dialogueBox) {
-  dialogueBox.style.marginTop = "0px";
-  dialogueBox.classList.remove('collapsed');
-  setTimeout(function() {
-    dialogueBox.style.transform = "scaleY(1)"
-  }, 250)
-};
-
 function collapseSongDialogueArea(dialogueBox) {
   dialogueBox.style.transform = "scaleY(0)"
   dialogueBox.classList.add('collapsed');
