@@ -136,6 +136,24 @@
       slider.oninput = function() {
           output.innerHTML = this.value;
       }
+
+      //making sure we capture enters in text fields
+      var addInstrumentText = document.getElementById("add-instrument-text");
+      addInstrumentText.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("add-instrument-button").focus();
+        }
+      });
+
+      var addSongNameText = document.getElementById("song-name");
+      addSongNameText.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("create-sqnt-button").focus();
+        }
+      });
+
     </script>
   </body>
 </html>
