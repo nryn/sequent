@@ -213,8 +213,19 @@ const filterForCurrentInstrument = function (phraseNoteList, instrument) {
   });
 };
 
+const fullNoteRange = ["C0","C#0","D0","Eb0","E0","F0","F#0","G0","Ab0","A0","Bb0","B0","C1","C#1","D1","Eb1","E1","F1","F#1","G1","Ab1","A1","Bb1","B1","C2","C#2","D2","Eb2","E2","F2","F#2","G2","Ab2","A2","Bb2","B2","C3","C#3","D3","Eb3","E3","F3","F#3","G3","Ab3","A3","Bb3","B3","C4","C#4","D4","Eb4","E4","F4","F#4","G4","Ab4","A4","Bb4","B4","C5","C#5","D5","Eb5","E5","F5","F#5","G5","Ab5","A5","Bb5","B5","C6","C#6","D6","Eb6","E6","F6","F#6","G6","Ab6","A6","Bb6","B6"];
+
+const getWavelengthFromNote = function(note) {
+  let middleA = fullNoteRange.indexOf("A4");
+  let halfStepsFromMiddleA = fullNoteRange.indexOf(note.note + note.octave) - middleA;
+  return 440 * ((2**(1/12))**halfStepsFromMiddleA);
+};
+
 Sequencer.prototype.renderPlaybackEffect = function(frameNumber, noteList) {
-  let tempo = this.player.currentSong.tempo;
+  noteList.forEach(function(note) {
+    let sound = new Triangle(this.player.context);
+    sound.play(getWavelengthFromNote(note), this.player.context.currentTime, note.duration)
+  }.bind(this));
   let noteInScale = this.player.currentSong.scale;
   noteInScale.forEach(function(scaleNote) {
     let cell = document.getElementsByClassName(scaleNote + " seq_note_row")[0].cells[frameNumber];
