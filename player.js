@@ -59,6 +59,24 @@ Player.prototype.load = function(song) {
   this.sequencer.showSongInfo(song);
 };
 
+Player.prototype.refreshNoteBuffer = function() {
+  this.noteBuffer = [];
+  let sections = this.currentSong.structure;
+  let phrases = this.currentSong.phrases;
+
+  for (var section in sections) {
+    let phrase = phrases[sections[section]];
+    for (var bar in phrase.bars) {
+      for (var beat = 1; beat <= phrase.bars[bar].timeSig.beatCount; beat++) {
+        for (var semiquaver in phrase.bars[bar].beats[beat]) {
+          let noteData = phrase.bars[bar].beats[beat][semiquaver];
+          this.noteBuffer.push(noteData);
+        };
+      };
+    };
+  };
+}
+
 Player.prototype.clear = function() {
   this.currentSong = {};
   this.noteBuffer = [];

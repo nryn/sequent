@@ -45,6 +45,7 @@ Sequencer.prototype.toggleNote = function(noteElement) {
     noteElement.appendChild(fillerDiv);
     toggledNoteList.push(new Note(this.currentOnscreenInstrument, note));
   }
+  this.player.refreshNoteBuffer();
 };
 
 Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, currentOnscreenInstrument) {
@@ -323,6 +324,7 @@ Sequencer.prototype.addInstrument = function() {
 Sequencer.prototype.removeInstrument = function() {
   let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
   this.player.currentSong.removeNotesforInstrument(instrumentSelector.value);
+  this.player.refreshNoteBuffer();
   instrumentSelector.childNodes.forEach(function(optionElement) {
     if (optionElement.value == instrumentSelector.value) {
       instrumentSelector.removeChild(optionElement);
