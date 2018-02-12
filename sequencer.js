@@ -48,7 +48,7 @@ Sequencer.prototype.toggleNote = function(noteElement) {
   this.player.refreshNoteBuffer();
 };
 
-Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, currentOnscreenInstrument) {
+Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase = this.currentOnscreenPhrase, currentOnscreenInstrument = this.currentOnscreenInstrument) {
   this.currentOnscreenPhrase = currentOnscreenPhrase;
   this.currentOnscreenInstrument = currentOnscreenInstrument;
 
