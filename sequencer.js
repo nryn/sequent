@@ -303,6 +303,35 @@ Sequencer.prototype.collapseAddInstrumentDialogue = function() {
   document.getElementById('instrument-select-controls').style.display = "block";
 };
 
+Sequencer.prototype.reload = function() {
+  let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
+  let lastInstrumentUsed = this.currentOnscreenInstrument;
+  let beforeInstrumentList = [];
+  instrumentSelector.childNodes.forEach(function(option) {
+    beforeInstrumentList.push(option.value);
+  });
+  removeAllChildren(instrumentSelector)
+  removeAllChildren(document.getElementById('playback-grid')) // we need a fresh list of instruments when loading to avoid column duplication in the visualiser
+  this.player.load(this.player.currentSong);
+
+  let afterInstrumentList = [];
+  instrumentSelector.childNodes.forEach(function(option) {
+    afterInstrumentList.push(option.value);
+  });
+
+  let finalInstrumentList = beforeInstrumentList.filter(instrument => !afterInstrumentList.includes(instrument));
+
+  finalInstrumentList.forEach(function(instrument) {
+    let newOption = document.createElement("option")
+    newOption.setAttribute("value", instrument);
+    newOption.innerHTML = instrument;
+    instrumentSelector.appendChild(newOption);
+  });
+
+  instrumentSelector.value = lastInstrumentUsed;
+  this.currentOnscreenInstrument = lastInstrumentUsed;
+};
+
 Sequencer.prototype.addInstrument = function() {
   let newInstrumentElement = document.getElementById('add-instrument-text');
   let newInstrument = newInstrumentElement.value;
