@@ -130,6 +130,8 @@ Player.prototype.unpackEncodedSong = function() {
       };
       loadedSong.addPhrase(currentLoadingPhrase);
     };
+    removeAllChildren(document.getElementById('sequencer-transport-bar-instrument-selector')) // to avoid instrument duplication in the visualiser
+    removeAllChildren(document.getElementById('playback-grid')) // to avoid instrument duplication in the visualiser
     this.load(loadedSong);
   };
 };
