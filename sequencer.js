@@ -280,15 +280,19 @@ Sequencer.prototype.addPhrase = function() {
   let firstBarForPhrase = new Bar();
   phraseToAdd.addBar(firstBarForPhrase);
   this.player.currentSong.addPhrase(phraseToAdd);
-  this.player.load(this.player.currentSong);
+  this.reload();
   let sectionSelector = document.getElementById('sequencer-transport-bar-section-selector')
   sectionSelector.value = sectionSelector.options[sectionSelector.options.length - 1].value;
+  this.showSection(sectionSelector.value);
+  this.player.visualiser.renderGridArea(this.player.currentSong);
 };
 
 Sequencer.prototype.removePhrase = function() {
   let selectedPhrase = document.getElementById('sequencer-transport-bar-section-selector').selectedIndex;
   this.player.currentSong.structure.splice(selectedPhrase, 1);
-  this.player.load(this.player.currentSong);
+  this.reload();
+  this.player.visualiser.renderGridArea(this.player.currentSong);
+  this.showInstrument(this.currentOnscreenInstrument)
 };
 
 Sequencer.prototype.expandAddInstrumentDialogue = function() {
