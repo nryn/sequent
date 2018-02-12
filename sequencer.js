@@ -238,7 +238,7 @@ Sequencer.prototype.createSongFromForm = function() {
 
 Sequencer.prototype.saveSong = function() {
   let d = new Date();
-  let filename = "Sequent_Song_" + this.player.currentSong.name + "_" + d.getHours() + "_" + d.getMinutes() + "_" + d.toDateString().split(' ').join('_');
+  let filename = "SequentProject_" + this.player.currentSong.name.split(" ").join("_") + "_" + d.getHours() + "_" + d.getMinutes() + "_" + d.toDateString().split(' ').join('_');
   let encodedSong = this.encodeCurrentSong();
   var dlElement = document.createElement('a');
   dlElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodedSong);
@@ -270,7 +270,6 @@ Sequencer.prototype.addBarToSong = function() {
   this.showSection(currentSection);
   this.showInstrument(currentInstrument);
 };
-
 
 function removeAllChildren(parentNode) {
   while (parentNode.hasChildNodes()) {
@@ -308,12 +307,11 @@ Sequencer.prototype.addInstrument = function() {
   let newInstrumentElement = document.getElementById('add-instrument-text');
   let newInstrument = newInstrumentElement.value;
   newInstrumentElement.value = "";
-  document.getElementById('add-instrument-text').value;
   let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
   let newOption = document.createElement("option")
   newOption.setAttribute("value", newInstrument);
   newOption.innerHTML = newInstrument;
-  instrumentSelector.appendChild(newOption)
+  instrumentSelector.appendChild(newOption);
   instrumentSelector.value = newInstrument;
   this.collapseAddInstrumentDialogue();
   this.showInstrument(newInstrument);
