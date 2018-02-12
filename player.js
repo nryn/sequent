@@ -5,6 +5,7 @@ function Player() {
   this.noteBuffer = [];
   this.visualiser = new Visualiser(this);
   this.sequencer = new Sequencer(this);
+  this.context = new (window.AudioContext || window.webkitAudioContext)();
 };
 
 Player.prototype.toggleSongDialogue = function(typeOfDialogue) {
