@@ -54,9 +54,7 @@ Sequencer.prototype.renderGridArea = function(song, currentOnscreenPhrase, curre
 
   let sequencerTable = document.getElementById('sequencer-grid');
   while (sequencerTable.hasChildNodes()) {
-    while (sequencerTable.lastChild.hasChildNodes()) {
-      sequencerTable.lastChild.removeChild(sequencerTable.lastChild.lastChild)
-    }
+    removeAllChildren(sequencerTable.lastChild);
     sequencerTable.removeChild(sequencerTable.lastChild); // let's empty the grid before rendering it, just in case
   };
 
