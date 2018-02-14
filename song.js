@@ -8,7 +8,7 @@ function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.getInstrumentList = this.searchForInstruments;
   this.instruments = [];
   this.phrases = {};
-  this.scale = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
+  this.scale = ["B", "Bb", "A", "Ab", "G", "F#", "F", "E", "Eb", "D", "C#", "C"];
   this.sectionMap=new WeakMap;
   this.sectionLetter = "A".charCodeAt(0) - 1;
 }
