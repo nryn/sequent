@@ -1,6 +1,6 @@
 'use strict'
 
-function Instrument(name = "Piano") {
+function Instrument(name = "Piano", sounds = []) {
   this.name = name;
   this.sounds = []
   this.createSound();
@@ -10,7 +10,7 @@ Instrument.prototype.createSound = function() {
   // default note sound
   let sound = {
     type : "note",
-    waveform : "triangle"
+    waveform : ["triangle", "sine", "square", "sawtooth"][Math.floor(Math.random()*4)]
   }
   this.sounds.push(sound);
 };
@@ -22,7 +22,7 @@ Instrument.prototype.removeSound = function(pos) {
 Instrument.prototype.changeSound = function(pos, newSoundSettings) {
 
   // example of a noise sound
-  
+
   // newSoundSettings = {
   //   type : "noise",
   //   filterType : "highpass",
