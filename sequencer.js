@@ -272,18 +272,11 @@ Sequencer.prototype.encodeCurrentSong = function() {
 };
 
 Sequencer.prototype.addBarToSong = function() {
-  let currentPhrase = this.player.currentSong.phrases[this.currentOnscreenPhrase];
   let currentSection = this.currentOnscreenPhrase;
-  let currentInstrument = this.currentOnscreenInstrument;
+  let currentPhrase = this.player.currentSong.phrases[currentSection];
   let newBar = new Bar();
   currentPhrase.addBar(newBar);
-  this.player.load(this.player.currentSong);
-  const sectionDropdown = document.getElementById('sequencer-transport-bar-section-selector');
-  const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
-  sectionDropdown.value = currentSection;
-  instrumentDropdown.value = currentInstrument;
-  this.showSection(currentSection);
-  this.showInstrument(currentInstrument);
+  this.reload();
 };
 
 function removeAllChildren(parentNode) {
@@ -300,16 +293,18 @@ Sequencer.prototype.addPhrase = function() {
   this.reload();
   let sectionSelector = document.getElementById('sequencer-transport-bar-section-selector')
   sectionSelector.value = sectionSelector.options[sectionSelector.options.length - 1].value;
-  this.showSection(sectionSelector.value);
+  this.showSection(sectionSelector.value); //we have to overwrite the showSection done by the reload because adding a phrase means the new phrase should be automatically selected
   this.player.visualiser.renderGridArea(this.player.currentSong);
 };
 
 Sequencer.prototype.removePhrase = function() {
   let selectedPhrase = document.getElementById('sequencer-transport-bar-section-selector').selectedIndex;
-  this.player.currentSong.structure.splice(selectedPhrase, 1);
-  this.reload();
+  let phraseToCheckForAbsoluteDeletion = this.player.currentSong.structure.splice(selectedPhrase, 1);
+  if (!this.player.currentSong.structure.includes(phraseToCheckForAbsoluteDeletion)) {
+    delete this.player.currentSong.phrases[phraseToCheckForAbsoluteDeletion];
+  }
+  this.reload("reset phrase");
   this.player.visualiser.renderGridArea(this.player.currentSong);
-  this.showInstrument(this.currentOnscreenInstrument)
 };
 
 Sequencer.prototype.expandAddInstrumentDialogue = function() {
@@ -322,33 +317,23 @@ Sequencer.prototype.collapseAddInstrumentDialogue = function() {
   document.getElementById('instrument-select-controls').style.display = "block";
 };
 
-Sequencer.prototype.reload = function() {
-  let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
-  let lastInstrumentUsed = this.currentOnscreenInstrument;
-  let beforeInstrumentList = [];
-  instrumentSelector.childNodes.forEach(function(option) {
-    beforeInstrumentList.push(option.value);
-  });
-  removeAllChildren(instrumentSelector)
-  removeAllChildren(document.getElementById('playback-grid')) // we need a fresh list of instruments when loading to avoid column duplication in the visualiser
+Sequencer.prototype.reload = function(flag) {
+  let instrumentToRestore = this.currentOnscreenInstrument;
+  let sectionToRestore = this.currentOnscreenPhrase;
+
   this.player.load(this.player.currentSong);
 
-  let afterInstrumentList = [];
-  instrumentSelector.childNodes.forEach(function(option) {
-    afterInstrumentList.push(option.value);
-  });
+  let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
+  instrumentSelector.value = instrumentToRestore.name;
+  this.currentOnscreenInstrument = instrumentToRestore;
+  this.showInstrument(instrumentToRestore.name)
 
-  let finalInstrumentList = beforeInstrumentList.filter(instrument => !afterInstrumentList.includes(instrument));
-
-  finalInstrumentList.forEach(function(instrument) {
-    let newOption = document.createElement("option")
-    newOption.setAttribute("value", instrument);
-    newOption.innerHTML = instrument;
-    instrumentSelector.appendChild(newOption);
-  });
-
-  instrumentSelector.value = lastInstrumentUsed;
-  this.currentOnscreenInstrument = lastInstrumentUsed;
+  if (flag != "reset phrase") {
+    let sectionSelector = document.getElementById('sequencer-transport-bar-section-selector');
+    sectionSelector.value = sectionToRestore;
+    this.currentOnscreenPhrase = sectionToRestore;
+    this.showSection(sectionToRestore)
+  }
 };
 
 Sequencer.prototype.addInstrument = function() {
