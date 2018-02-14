@@ -31,6 +31,8 @@ function songBpmToSemiquaverMilliseconds(bpm) {
 Visualiser.prototype.renderNotesInGridCells = function(noteList) {
   let tempo = this.player.currentSong.tempo;
   noteList.forEach(function(note) {
+    let sound = new Sound(this.player.context, note.instrument);
+    sound.play(getWavelengthFromNote(note), this.player.context.currentTime, note.duration)
     let cell = document.getElementById(note.note + "_" + note.instrument.name);
     let fillerDiv = document.createElement('div');
     fillerDiv.classList.add('filler');
@@ -39,7 +41,7 @@ Visualiser.prototype.renderNotesInGridCells = function(noteList) {
     setTimeout(function() {
       cell.removeChild(fillerDiv);
     }, 1500); // remove element after arbitrary second and a half
-  });
+  }.bind(this));
 };
 
 Visualiser.prototype.renderGridArea = function(song){
