@@ -105,6 +105,7 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
 
 Player.prototype.unpackEncodedSong = function() {
   let decodedSongData = atob(document.getElementById('load-sqnt-textarea').value);
+  document.getElementById('load-sqnt-textarea').value = "";
   let loadedSongData = JSON.parse(decodedSongData) || {};
   if (JSON.stringify(loadedSongData) == "{}" || !loadedSongData.name) {
     alert("sequent did not understand the song you are trying to load. sorry.");
