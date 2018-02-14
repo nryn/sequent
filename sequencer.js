@@ -362,6 +362,6 @@ Sequencer.prototype.removeInstrument = function() {
     };
   });
   instrumentSelector.value = instrumentSelector.firstChild.value;
-  this.showInstrument(this.currentOnscreenInstrument.name);
+  this.showInstrument(instrumentSelector.value);
   this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we re-render the visualiser area
 };
