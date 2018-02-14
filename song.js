@@ -6,6 +6,7 @@ function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.keySignature = keySignature;
   this.structure = [];
   this.getInstrumentList = this.searchForInstruments;
+  this.instruments = [];
   this.phrases = {};
   this.scale = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
   this.sectionMap=new WeakMap;
