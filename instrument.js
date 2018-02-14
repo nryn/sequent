@@ -2,8 +2,8 @@
 
 function Instrument(name = "Piano", sounds = []) {
   this.name = name;
-  this.sounds = []
-  this.createSound();
+  this.sounds = sounds;
+  sounds.length ? "noop" : this.createSound();
 }
 
 Instrument.prototype.createSound = function() {
