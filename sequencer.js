@@ -175,10 +175,10 @@ Sequencer.prototype.showSongInfo = function(song) {
   const instrumentDropdown = document.getElementById('sequencer-transport-bar-instrument-selector');
   removeAllChildren(instrumentDropdown);
   instrumentDropdown.setAttribute("onchange", "sequentPlayer.sequencer.showInstrument(this.value)")
-  song.getInstrumentList().forEach(function(instrument) {
+  song.instruments.forEach(function(instrument) {
     let instrumentOption = document.createElement('option');
-    instrumentOption.innerHTML = instrument;
-    instrumentOption.setAttribute("value", instrument)
+    instrumentOption.innerHTML = instrument.name;
+    instrumentOption.setAttribute("value", instrument.name)
     instrumentDropdown.appendChild(instrumentOption);
   });
   songControlsArea.style.transform = "scaleY(1)"; //expand song info area
@@ -188,7 +188,9 @@ Sequencer.prototype.showSection = function(sectionLetter) {
   this.renderGridArea(this.player.currentSong, sectionLetter, this.currentOnscreenInstrument);
 };
 
-Sequencer.prototype.showInstrument = function(instrument) {
+Sequencer.prototype.showInstrument = function(instrumentName) {
+  let instrument = this.player.currentSong.getInstrumentByName(instrumentName);
+  this.currentOnscreenInstrument = instrument;
   this.renderGridArea(this.player.currentSong, this.currentOnscreenPhrase, instrument);
 };
 
@@ -242,7 +244,11 @@ Sequencer.prototype.renderPlaybackEffect = function(frameNumber, noteList) {
 Sequencer.prototype.createSongFromForm = function() {
   let songName = document.getElementById('song-name').value;
   let tempo = document.getElementById('tempo-input').value;
-  this.player.createSong(songName, tempo);
+  let newSong = this.player.createSong(songName, tempo);
+  let defaultInstrument = newSong.addInstrument("Trombone");
+  this.showSongInfo(newSong);
+  this.currentOnscreenInstrument = defaultInstrument;
+  this.player.visualiser.renderGridArea(this.player.currentSong); // need to run this to make sure we dont start with empty vis grid!
 };
 
 Sequencer.prototype.saveSong = function() {
@@ -347,23 +353,23 @@ Sequencer.prototype.reload = function() {
 
 Sequencer.prototype.addInstrument = function() {
   let newInstrumentElement = document.getElementById('add-instrument-text');
-  let newInstrument = newInstrumentElement.value;
+  let newInstrumentName = newInstrumentElement.value;
+  let newInstrument = this.player.currentSong.addInstrument(newInstrumentName);
   newInstrumentElement.value = "";
   let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
   let newOption = document.createElement("option")
-  newOption.setAttribute("value", newInstrument);
-  newOption.innerHTML = newInstrument;
+  newOption.setAttribute("value", newInstrumentName);
+  newOption.innerHTML = newInstrumentName;
   instrumentSelector.appendChild(newOption);
-  instrumentSelector.value = newInstrument;
+  instrumentSelector.value = newInstrumentName;
   this.collapseAddInstrumentDialogue();
-  this.showInstrument(newInstrument);
-  this.currentOnscreenInstrument = newInstrument;
+  this.showInstrument(newInstrument.name);
   this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we re-render the visualiser area
 };
 
 Sequencer.prototype.removeInstrument = function() {
   let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
-  this.player.currentSong.removeNotesforInstrument(instrumentSelector.value);
+  this.player.currentSong.removeInstrument(instrumentSelector.value);
   this.player.refreshNoteBuffer();
   instrumentSelector.childNodes.forEach(function(optionElement) {
     if (optionElement.value == instrumentSelector.value) {
@@ -371,7 +377,6 @@ Sequencer.prototype.removeInstrument = function() {
     };
   });
   instrumentSelector.value = instrumentSelector.firstChild.value;
-  this.currentOnscreenInstrument = instrumentSelector.value;
-  this.showInstrument(this.currentOnscreenInstrument);
+  this.showInstrument(this.currentOnscreenInstrument.name);
   this.player.visualiser.renderGridArea(this.player.currentSong); // we need to make sure we re-render the visualiser area
 };

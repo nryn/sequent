@@ -5,7 +5,6 @@ function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.tempo = tempo;
   this.keySignature = keySignature;
   this.structure = [];
-  this.getInstrumentList = this.searchForInstruments;
   this.instruments = [];
   this.phrases = {};
   this.scale = ["B", "Bb", "A", "Ab", "G", "F#", "F", "E", "Eb", "D", "C#", "C"];
@@ -13,39 +12,27 @@ function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.sectionLetter = "A".charCodeAt(0) - 1;
 }
 
-Song.prototype.searchForInstruments = function () {
+Song.prototype.addInstrument = function(instrumentName, instrumentSounds) {
+  let newInstrument = new Instrument(instrumentName, instrumentSounds);
+  this.instruments.push(newInstrument);
+  return newInstrument;
+}
 
-  let instrumentList = [];
-
-  function iterateOverObject(obj) {
-    for (var property in obj) {
-      if (obj.hasOwnProperty(property)) {
-        if (typeof obj[property] == "object") {
-          iterateOverObject(obj[property]);
-        }
-        else {
-          if (property == "instrument" && !instrumentList.includes(obj[property])) { instrumentList.push(obj[property]) };
-        };
-      };
-    };
-  };
-
-  function checkOnScreenInstruments() {
-    let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
-    instrumentSelector.childNodes.forEach(function(optionElement) {
-      instrumentList.push(optionElement.value);
-    });
-  }
-
-  iterateOverObject(this.phrases);
-  checkOnScreenInstruments();
-
-  let uniqueInstrumentList = instrumentList.filter(function(value, index, self) {
-    return self.indexOf(value) === index;
+Song.prototype.removeInstrument = function(instrumentName) {
+  let instrumentsToRemove = this.instruments.filter(function(instrument) {
+    return instrument.name == instrumentName;
   });
+  instrumentsToRemove.forEach(function(instrument) {
+    this.removeNotesforInstrument(instrument);
+    this.instruments.splice(this.instruments.indexOf(instrument), 1)
+  }.bind(this));
+}
 
-  return uniqueInstrumentList.length == 0 ? ["Piano"] : uniqueInstrumentList; // get the current instruments onscreen ready if there aren't any instruments being used at all
-};
+Song.prototype.getInstrumentByName = function(instrumentName) {
+  return this.instruments.filter(function(instrument) {
+    return instrument.name == instrumentName;
+  })[0];
+}
 
 Song.prototype.generateSection = function(phrase) {
   if (!this.sectionMap.has(phrase)) this.sectionMap.set(phrase,++this.sectionLetter);

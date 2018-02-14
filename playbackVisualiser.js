@@ -31,7 +31,7 @@ function songBpmToSemiquaverMilliseconds(bpm) {
 Visualiser.prototype.renderNotesInGridCells = function(noteList) {
   let tempo = this.player.currentSong.tempo;
   noteList.forEach(function(note) {
-    let cell = document.getElementById(note.note + "_" + note.instrument);
+    let cell = document.getElementById(note.note + "_" + note.instrument.name);
     let fillerDiv = document.createElement('div');
     fillerDiv.classList.add('filler');
     cell.appendChild(fillerDiv);
@@ -48,18 +48,16 @@ Visualiser.prototype.renderGridArea = function(song){
     playbackTable.removeChild(playbackTable.lastChild); // let's empty the grid before rendering it, just in case
   };
 
-  const instruments = song.getInstrumentList();
-
   song.scale.forEach(function(note) {
     let row = document.createElement('tr');
     row.classList.add(note);
     row.classList.add("vis_note_row");
     row.classList.add("collapsed");
     playbackTable.appendChild(row);
-    instruments.forEach(function(instrument) {
+    song.instruments.forEach(function(instrument) {
       let noteCell = document.createElement('td');
-      noteCell.id = note + "_" + instrument;
-      noteCell.classList.add(instrument);
+      noteCell.id = note + "_" + instrument.name;
+      noteCell.classList.add(instrument.name);
       noteCell.classList.add("vis_note_cell");
       noteCell.classList.add("collapsed");
       row.appendChild(noteCell);

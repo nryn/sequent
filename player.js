@@ -55,9 +55,9 @@ Player.prototype.load = function(song) {
       };
     };
   };
-  this.visualiser.renderGridArea(song)
-  this.sequencer.renderGridArea(song, song.structure[0], song.getInstrumentList()[0])
+  this.sequencer.renderGridArea(song, song.structure[0], song.instruments[0])
   this.sequencer.showSongInfo(song);
+  this.visualiser.renderGridArea(song)
 };
 
 Player.prototype.refreshNoteBuffer = function() {
@@ -96,6 +96,7 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
     song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));
     this.currentSong = song; // too magic?
     this.load(song);
+    return song;
   } else {
     this.clear();
     this.createSong(givenName, givenTempo);
@@ -110,6 +111,9 @@ Player.prototype.unpackEncodedSong = function() {
   }
   else {
     let loadedSong = new Song(loadedSongData.name, loadedSongData.tempo, loadedSongData.keySignature)
+    loadedSongData.instruments.forEach(function(instrument) {
+      loadedSong.addInstrument(instrument.name, instrument.sounds)
+    });
     for (var phrase in loadedSongData.phrases) {
       let currentPhraseData = loadedSongData.phrases[phrase];
       let currentLoadingPhrase = new Phrase();
@@ -122,7 +126,7 @@ Player.prototype.unpackEncodedSong = function() {
             let currentSemiData = currentBeatData[semi];
             for (var note in currentSemiData) {
               let currentNoteData = currentSemiData[note];
-              let currentLoadingNote = new Note(currentNoteData.instrument , currentNoteData.note);
+              let currentLoadingNote = new Note(loadedSong.getInstrumentByName(currentNoteData.instrument.name) , currentNoteData.note);
               currentLoadingBar.beats[beat][semi].push(currentLoadingNote);
             };
           };
