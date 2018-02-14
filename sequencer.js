@@ -223,7 +223,7 @@ const getWavelengthFromNote = function(note) {
 
 Sequencer.prototype.renderPlaybackEffect = function(frameNumber, noteList) {
   noteList.forEach(function(note) {
-    let sound = new Triangle(this.player.context);
+    let sound = new Sound(this.player.context, {description : "this is a fake, a real instance of Instrument (the one the current playing note uses) should be here", sounds : [{type : "note", waveform : "triangle"}]});
     sound.play(getWavelengthFromNote(note), this.player.context.currentTime, note.duration)
   }.bind(this));
   let noteInScale = this.player.currentSong.scale;
