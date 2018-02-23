@@ -245,7 +245,7 @@ Sequencer.prototype.createSongFromForm = function() {
   let songName = document.getElementById('song-name').value;
   let tempo = document.getElementById('tempo-input').value;
   let newSong = this.player.createSong(songName, tempo);
-  let defaultInstrument = newSong.addInstrument("Trombone");
+  let defaultInstrument = newSong.addInstrument("Piano");
   this.showSongInfo(newSong);
   this.currentOnscreenInstrument = defaultInstrument;
   this.player.visualiser.renderGridArea(this.player.currentSong); // need to run this to make sure we dont start with empty vis grid!
