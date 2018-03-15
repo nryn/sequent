@@ -34,7 +34,7 @@
           <div id ="dialogue-text">
             <p>creating a new song.</p>
             <p>any unsaved changes to your current song will be lost.</p>
-            <hr>
+            <hr class="big">
           </div>
         </div>
         <div id ="dialogue-text">
@@ -45,14 +45,14 @@
             <input type="range" id="tempo-input" min="60" max="150" step="5">
             <button type="button" id="create-sqnt-button" onClick="sequentPlayer.sequencer.createSongFromForm()">create song</button>
           </form>
-          <hr>
+          <hr class="big">
         </div>
       </div>
       <div id="load-song-dialogue-box" class="collapsed">
         <div id ="dialogue-text">
           <textarea id="load-sqnt-textarea" placeholder="If you have a previously-saved .sqnt.txt file, please paste its contents in this text box."></textarea>
           <button id="load-sqnt-button" onClick="sequentPlayer.unpackEncodedSong()">load</button>
-          <hr>
+          <hr class="big">
         </div>
       </div>
       <div id="workspaces">
@@ -66,7 +66,7 @@
               <div id="sequencer-transport-bar-section-controls">
                 <p class="transport-label">Section</p>
                 <select id="sequencer-transport-bar-section-selector"></select>
-                <div class="add-remove-conrols">
+                <div class="add-remove-controls">
                   <button onClick="sequentPlayer.sequencer.addPhrase();">✚</button>
                   <button onClick="sequentPlayer.sequencer.removePhrase();">✖</button>
                 </div>
@@ -75,18 +75,24 @@
                 <p class="transport-label">Instrument</p>
                 <div id="instrument-select-controls">
                   <select id="sequencer-transport-bar-instrument-selector"></select>
-                  <div class="add-remove-conrols">
+                  <div class="add-remove-controls">
                     <button onClick="sequentPlayer.sequencer.expandAddInstrumentDialogue();">✚</button>
                     <button onClick="sequentPlayer.sequencer.removeInstrument();">✖</button>
                   </div>
                 </div>
                 <form id="instrument-add-controls" style="display:none;">
-                  <input id="add-instrument-text" type="text" placeholder="e.g. Flute">
-                  <div class="add-remove-conrols">
+                  <select id="sequencer-transport-bar-add-instrument-selector">
+                    <option value="" disabled selected>Please select...</option>
+                  </select>
+                  <div class="add-remove-controls">
                     <button id="add-instrument-button" type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
-                    <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
                   </div>
                 </form>
+              </div>
+              <div id="sequencer-transport-bar-instrument-settings">
+                <p class="transport-label">Settings</p>
+                <div id="instrument-settings-controls">
+                </div>
               </div>
             </div>
             <div id="transport-buttons">
@@ -140,13 +146,6 @@
       }
 
       //making sure we capture enters in text fields
-      var addInstrumentText = document.getElementById("add-instrument-text");
-      addInstrumentText.addEventListener("keydown", function(event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("add-instrument-button").focus();
-        }
-      });
 
       var addSongNameText = document.getElementById("song-name");
       addSongNameText.addEventListener("keydown", function(event) {
@@ -156,12 +155,14 @@
         }
       });
 
-      // Instruments can be passed to Sounds to configure them.
-      // const testInstrument = new Instrument("TriangleWave")
-      // let foo = new Sound(sequentPlayer.context, testInstrument)
-      // foo.play(440, sequentPlayer.context.currentTime, 4)
-
-      const testInstrument = new Instrument("TriangleWave")
+      //populating the add instrument selector with anything that has a custom wavetable
+      let addInstrumentSelector = document.getElementById('sequencer-transport-bar-add-instrument-selector');
+      Object.keys(customWaveTables).forEach(function(waveTableName) {
+        let newOption = document.createElement("option")
+        newOption.setAttribute("value", waveTableName);
+        newOption.innerHTML = waveTableName;
+        addInstrumentSelector.appendChild(newOption);
+      });
 
     </script>
   </body>

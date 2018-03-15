@@ -181,6 +181,7 @@ Sequencer.prototype.showSongInfo = function(song) {
     instrumentOption.setAttribute("value", instrument.name)
     instrumentDropdown.appendChild(instrumentOption);
   });
+  this.showInstrumentSettings(this.currentOnscreenInstrument);
   songControlsArea.style.transform = "scaleY(1)"; //expand song info area
 };
 
@@ -192,6 +193,141 @@ Sequencer.prototype.showInstrument = function(instrumentName) {
   let instrument = this.player.currentSong.getInstrumentByName(instrumentName);
   this.currentOnscreenInstrument = instrument;
   this.renderGridArea(this.player.currentSong, this.currentOnscreenPhrase, instrument);
+  // and render instrument sounds and settings
+  this.showInstrumentSettings(instrument)
+};
+
+Sequencer.prototype.showInstrumentSettings = function(instrument) {
+  let instrumentSettingsArea = document.getElementById("instrument-settings-controls");
+  removeAllChildren(instrumentSettingsArea);
+  instrument.sounds.forEach(function(sound) {
+    let instrumentSoundSettingsContainer = document.createElement('div');
+    instrumentSoundSettingsContainer.classList.add('instrument-sound');
+
+    let instrumentSoundTypeSelector = document.createElement('select');
+    instrumentSoundTypeSelector.classList.add('sound-type-selector');
+    instrumentSoundTypeSelector.setAttribute('onchange','{{FUNCTION_TO_SHOW_NEW_INST_SETTINGS_OPTIONS_IN_UI}}')
+
+    let noteOption = document.createElement('option');
+    noteOption.setAttribute('value','note');
+    noteOption.innerHTML = "Note";
+
+    let noiseOption = document.createElement('option');
+    noiseOption.setAttribute('value','noise');
+    noiseOption.innerHTML = "Noise";
+
+    let smallRule = document.createElement('hr');
+    smallRule.classList.add('small');
+
+    instrumentSoundTypeSelector.appendChild(noteOption);
+    instrumentSoundTypeSelector.appendChild(noiseOption);
+    instrumentSoundSettingsContainer.appendChild(instrumentSoundTypeSelector);
+    instrumentSoundSettingsContainer.appendChild(smallRule);
+
+    instrumentSettingsArea.appendChild(instrumentSoundSettingsContainer);
+
+    instrumentSoundTypeSelector.value = sound.type;
+
+    if (sound.type == "noise") {
+      //   filterType : "highpass",
+      //   filterFrequency : 1000,
+      //   noiseDuration : 1
+      let filterTypeSelector = document.createElement('select');
+      filterTypeSelector.classList.add('filter-type-selector');
+      filterTypeSelector.setAttribute('onchange','{{FUNCTION_TO_SHOW_NEW_INST_SETTINGS_OPTIONS_IN_UI}}')
+
+      let lowPassOption = document.createElement('option');
+      lowPassOption.setAttribute('value','lowpass');
+      lowPassOption.innerHTML = "Low Pass";
+
+      let highPassOption = document.createElement('option');
+      highPassOption.setAttribute('value','highpass');
+      highPassOption.innerHTML = "High Pass";
+
+      filterTypeSelector.appendChild(lowPassOption);
+      filterTypeSelector.appendChild(highPassOption);
+      instrumentSoundSettingsContainer.appendChild(filterTypeSelector);
+
+      filterTypeSelector.value = sound.filterType;
+
+      let filterFrequencySliderLabel = document.createElement('label');
+      filterFrequencySliderLabel.setAttribute('for','filter-frequency-input');
+      filterFrequencySliderLabel.innerHTML = "filter freq : ";
+      let filterFrequencySliderLabelValue = document.createElement('span');
+      filterFrequencySliderLabelValue.id = "filter-frequency-value";
+      filterFrequencySliderLabel.appendChild(filterFrequencySliderLabelValue);
+
+      let filterFrequencySlider = document.createElement('input');
+      filterFrequencySlider.setAttribute('type','range');
+      filterFrequencySlider.id = "filter-frequency-input";
+      filterFrequencySlider.setAttribute('min','50');
+      filterFrequencySlider.setAttribute('max','20000');
+      filterFrequencySlider.setAttribute('step','50');
+
+      instrumentSoundSettingsContainer.appendChild(filterFrequencySliderLabel);
+      instrumentSoundSettingsContainer.appendChild(filterFrequencySlider);
+      filterFrequencySlider.defaultValue = sound.filterFrequency;
+
+      let freqOutput = document.getElementById("filter-frequency-value");
+      freqOutput.innerHTML = filterFrequencySlider.value;
+      filterFrequencySlider.oninput = function() {
+          freqOutput.innerHTML = this.value;
+      }
+
+      let noiseDurationSliderLabel = document.createElement('label');
+      noiseDurationSliderLabel.setAttribute('for','noise-duration-input');
+      noiseDurationSliderLabel.innerHTML = "noise dur : ";
+      let noiseDurationSliderLabelValue = document.createElement('span');
+      noiseDurationSliderLabelValue.id = "noise-duration-value";
+      noiseDurationSliderLabel.appendChild(noiseDurationSliderLabelValue);
+
+      let noiseDurationSlider = document.createElement('input');
+      noiseDurationSlider.setAttribute('type','range');
+      noiseDurationSlider.id = "noise-duration-input";
+      noiseDurationSlider.setAttribute('min','0.01');
+      noiseDurationSlider.setAttribute('max','5.00');
+      noiseDurationSlider.setAttribute('step','0.01');
+
+      instrumentSoundSettingsContainer.appendChild(noiseDurationSliderLabel);
+      instrumentSoundSettingsContainer.appendChild(noiseDurationSlider);
+      noiseDurationSlider.defaultValue = sound.noiseDuration;
+
+      let noiseDurationOutput = document.getElementById("noise-duration-value");
+      noiseDurationOutput.innerHTML = noiseDurationSlider.value;
+      noiseDurationSlider.oninput = function() {
+          noiseDurationOutput.innerHTML = this.value;
+      }
+
+
+    } else if (sound.type == "note") {
+
+    }
+
+    let volumeSliderLabel = document.createElement('label');
+    volumeSliderLabel.setAttribute('for','volume-input');
+    volumeSliderLabel.innerHTML = "volume : ";
+    let volumeSliderLabelValue = document.createElement('span');
+    volumeSliderLabelValue.id = "volume-value";
+    volumeSliderLabel.appendChild(volumeSliderLabelValue);
+
+    let volumeSlider = document.createElement('input');
+    volumeSlider.setAttribute('type','range');
+    volumeSlider.id = "volume-input";
+    volumeSlider.setAttribute('min','0.00');
+    volumeSlider.setAttribute('max','1.00');
+    volumeSlider.setAttribute('step','0.01');
+
+    instrumentSoundSettingsContainer.appendChild(volumeSliderLabel);
+    instrumentSoundSettingsContainer.appendChild(volumeSlider);
+    volumeSlider.defaultValue = sound.volume;
+
+    let volumeOutput = document.getElementById("volume-value");
+    volumeOutput.innerHTML = Math.floor(volumeSlider.value * 100);
+    volumeSlider.oninput = function() {
+        volumeOutput.innerHTML = Math.floor(this.value * 100);
+    }
+    
+  });
 };
 
 Sequencer.prototype.getPhraseNotesForInstrument = function(phraseLetter, instrument) {
@@ -337,7 +473,7 @@ Sequencer.prototype.reload = function(flag) {
 };
 
 Sequencer.prototype.addInstrument = function() {
-  let newInstrumentElement = document.getElementById('add-instrument-text');
+  let newInstrumentElement = document.getElementById('sequencer-transport-bar-add-instrument-selector');
   let newInstrumentName = newInstrumentElement.value;
   let newInstrument = this.player.currentSong.addInstrument(newInstrumentName);
   newInstrumentElement.value = "";

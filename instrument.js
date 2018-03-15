@@ -223,9 +223,16 @@ Instrument.prototype.createSound = function() {
   let sound = {
     type : "note",
     waveform : "custom",
-    customInstrumentName : "Piano"
+    customInstrumentName : this.name,
+    volume : 0.5,
+    reverb : {
+      seconds : 10,
+      decay : 10,
+      reverse : false
+    }
   }
   sound.customInstrumentWaveTable = customWaveTables[sound.customInstrumentName];
+
   this.sounds.push(sound);
 };
 

@@ -93,6 +93,7 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
     let name = givenName || "The Best Song in the World";
     let timeSig = [4, 4];
     let song = new Song(name, tempo);
+    song.addInstrument("Piano");
     song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));
     this.currentSong = song; // too magic?
     this.load(song);

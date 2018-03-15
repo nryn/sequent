@@ -81,12 +81,12 @@ button {
   background-color: #e8ffff;
 }
 
-.add-remove-conrols {
+.add-remove-controls {
   display: flex;
 }
 
-.add-remove-conrols > button {
-  width: 45%;
+.add-remove-controls > button {
+  width: 100%;
   height: 34px;
   border: 0;
   background-color: #e8ffff;
@@ -94,7 +94,7 @@ button {
   color: #1bbbbb;
 }
 
-#instrument-add-controls .add-remove-conrols > button {
+#instrument-add-controls .add-remove-controls > button {
   background-color: #1bbbbb;
   color: #e8ffff;
 }
@@ -105,7 +105,7 @@ button {
 }
 
 
-#sequencer-transport-bar-section-controls, #sequencer-transport-bar-instrument-controls {
+#sequencer-transport-bar-section-controls, #sequencer-transport-bar-instrument-controls, #sequencer-transport-bar-instrument-settings {
   display: flex;
   flex-direction: column;
   border: 2px solid paleturquoise;
@@ -128,20 +128,27 @@ input#song-name {
   font-size: 100%;
 }
 
-input#add-instrument-text {
-  padding: 8px;
-  border: 0px;
+select#sequencer-transport-bar-add-instrument-selector {
+  width: 140px;
+  border: 2px solid;
   border-radius: 5px;
   background-color: #1bbbbb;
   color: paleturquoise;
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
-  width: 140px;
+  padding-top: 5px;
+  box-sizing: border-box;
   height: 30px;
 }
-input#add-instrument-text::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: paleturquoise;
-    opacity: 1; /* Firefox */
+
+.instrument-sound {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid #1bbbbb;
+  border-radius: 5px;
 }
 
 #load-song-dialogue-box, #create-song-dialogue-box {
@@ -200,10 +207,16 @@ form#instrument-add-controls {
   color: paleturquoise;
 }
 
-hr {
+hr.big {
   border: 1px solid #1bbbbb;
   margin: 20px;
   width: 610px;
+}
+
+hr.small {
+  border: 1px solid #1bbbbb;
+  margin: 8px 0px;
+  width: 100%;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -242,6 +255,7 @@ select {
   padding-top: 5px;
   box-sizing: border-box;
   height: 30px;
+  margin: 2px;
 }
 
 /* Things to do with the main grid system*/

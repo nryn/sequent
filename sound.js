@@ -28,12 +28,20 @@ class Sound {
         soundConfig.noiseFilter.frequency.value = sound.filterFrequency || 1000;
         soundConfig.noise.connect(soundConfig.noiseFilter);
         soundConfig.noiseEnvelope = this.context.createGain();
+        soundConfig.noiseEnvelope.gain.value = sound.volume || "0.5" ; // THIS DOES NOT SEEM TO WORK
         soundConfig.noiseFilter.connect(soundConfig.noiseEnvelope);
         soundConfig.noiseEnvelope.connect(this.context.destination);
       } else if (sound.type == "note") {
         soundConfig.type = "note";
         soundConfig.osc = this.context.createOscillator();
         soundConfig.gainNode = this.context.createGain();
+        soundConfig.gainNode.gain.value = sound.volume || "0.5" ; // THIS DOES NOT SEEM TO WORK
+        if (sound.reverb && sound.reverb.seconds > 0) {
+          soundConfig.convolverNode = this.context.createConvolver();
+          let impulseBuffer = this.impulseResponse(sound.reverb.seconds, sound.reverb.decay, sound.reverb.reverse);
+          soundConfig.convolverNode.buffer = impulseBuffer;
+          soundConfig.osc.connect(soundConfig.convolverNode); // THIS DOES NOT SEEM TO WORK
+        }
         if (sound.waveform == "custom") {
           let c = sound.customInstrumentWaveTable.real.length;
           let real = new Float32Array(c);
@@ -96,6 +104,23 @@ class Sound {
   	}
 
   	return buffer;
+  };
+
+  impulseResponse(seconds = 1, decay = 2, reverse = false) {
+    var sampleRate = this.context.sampleRate;
+    var bufferSize = sampleRate * seconds;
+    var impulse = this.context.createBuffer(2, bufferSize, sampleRate);
+    var impulseL = impulse.getChannelData(0);
+    var impulseR = impulse.getChannelData(1);
+
+    if (!decay)
+        decay = 2.0;
+    for (var i = 0; i < bufferSize; i++){
+      var n = reverse ? bufferSize - i : i;
+      impulseL[i] = (Math.random() * 2 - 1) * Math.pow(1 - n / bufferSize, decay);
+      impulseR[i] = (Math.random() * 2 - 1) * Math.pow(1 - n / bufferSize, decay);
+    }
+    return impulse;
   };
 
 };
