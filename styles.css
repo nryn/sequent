@@ -81,11 +81,11 @@ button {
   background-color: #e8ffff;
 }
 
-.add-remove-conrols {
+.add-remove-controls {
   display: flex;
 }
 
-.add-remove-conrols > button {
+.add-remove-controls > button {
   width: 45%;
   height: 34px;
   border: 0;
@@ -94,7 +94,11 @@ button {
   color: #1bbbbb;
 }
 
-#instrument-add-controls .add-remove-conrols > button {
+#left-workspace-button-loop {
+  color: #a2cccc;
+}
+
+#instrument-add-controls .add-remove-controls > button {
   background-color: #1bbbbb;
   color: #e8ffff;
 }

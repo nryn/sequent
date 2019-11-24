@@ -34,6 +34,7 @@
       <h1>sequent</h1>
       <div id ="workspace-controls">
         <button id="left-workspace-button" onClick="sequentPlayer.play();">▶</button>
+        <button id="left-workspace-button-loop" onClick="sequentPlayer.loopToggle();">↻</button>
         <div id="workspace-toggle">
           <label class="switch">
             <input type="checkbox" id="workspace-toggle-switch">
@@ -80,7 +81,7 @@
               <div id="sequencer-transport-bar-section-controls">
                 <p class="transport-label">Section</p>
                 <select id="sequencer-transport-bar-section-selector"></select>
-                <div class="add-remove-conrols">
+                <div class="add-remove-controls">
                   <button onClick="sequentPlayer.sequencer.addPhrase();">✚</button>
                   <button onClick="sequentPlayer.sequencer.removePhrase();">✖</button>
                 </div>
@@ -89,14 +90,14 @@
                 <p class="transport-label">Instrument</p>
                 <div id="instrument-select-controls">
                   <select id="sequencer-transport-bar-instrument-selector"></select>
-                  <div class="add-remove-conrols">
+                  <div class="add-remove-controls">
                     <button onClick="sequentPlayer.sequencer.expandAddInstrumentDialogue();">✚</button>
                     <button onClick="sequentPlayer.sequencer.removeInstrument();">✖</button>
                   </div>
                 </div>
                 <form id="instrument-add-controls" style="display:none;">
                   <input id="add-instrument-text" type="text" placeholder="e.g. Flute">
-                  <div class="add-remove-conrols">
+                  <div class="add-remove-controls">
                     <button id="add-instrument-button" type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
                     <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
                   </div>

@@ -6,7 +6,15 @@ function Player() {
   this.visualiser = new Visualiser(this);
   this.sequencer = new Sequencer(this);
   this.context = new (window.AudioContext || window.webkitAudioContext)();
+  this.loop = false;
 };
+
+Player.prototype.loopToggle = function() {
+  this.loop = !this.loop
+  const button = document.getElementById('left-workspace-button-loop');
+  button.style.color = this.loop === true ? '#1bbbbb' : '#a2cccc';
+  console.log('loop set to ', this.loop)
+}
 
 Player.prototype.toggleSongDialogue = function(typeOfDialogue) {
   let dialogueBox = document.getElementById(typeOfDialogue + '-song-dialogue-box');
@@ -103,8 +111,8 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
   }
 };
 
-Player.prototype.unpackEncodedSong = function() {
-  let decodedSongData = atob(document.getElementById('load-sqnt-textarea').value);
+Player.prototype.unpackEncodedSong = function(sqntfile) {
+  let decodedSongData = sqntfile ? atob(sqntfile) : atob(document.getElementById('load-sqnt-textarea').value);
   document.getElementById('load-sqnt-textarea').value = "";
   let loadedSongData = JSON.parse(decodedSongData) || {};
   if (JSON.stringify(loadedSongData) == "{}" || !loadedSongData.name) {
