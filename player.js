@@ -12,8 +12,8 @@ function Player() {
 Player.prototype.loopToggle = function() {
   this.loop = !this.loop
   const button = document.getElementById('left-workspace-button-loop');
-  button.style.color = this.loop === true ? '#1bbbbb' : '#a2cccc';
-  console.log('loop set to ', this.loop)
+  const toggleState = this.loop === true ? 'toggledOn' : 'toggledOff';
+  button.setAttribute('class', toggleState) 
 }
 
 Player.prototype.toggleSongDialogue = function(typeOfDialogue) {

@@ -94,7 +94,11 @@ button {
   color: #1bbbbb;
 }
 
-#left-workspace-button-loop {
+.toggledOn {
+  color: #1bbbbb;
+}
+
+.toggledOff {
   color: #a2cccc;
 }
 
