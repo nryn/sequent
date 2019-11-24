@@ -34,20 +34,7 @@ class Sound {
         soundConfig.type = "note";
         soundConfig.osc = this.context.createOscillator();
         soundConfig.gainNode = this.context.createGain();
-        if (sound.waveform == "custom") {
-          let c = sound.customInstrumentWaveTable.real.length;
-          let real = new Float32Array(c);
-          let imag = new Float32Array(c);
-          for (let i = 0; i < c; i++) {
-            real[i] = sound.customInstrumentWaveTable.real[i];
-            imag[i] = sound.customInstrumentWaveTable.imag[i];
-          }
-
-          let customTable = this.context.createPeriodicWave(real, imag);
-          soundConfig.osc.setPeriodicWave(customTable);
-        } else {
-          soundConfig.osc.type = sound.waveform;
-        }
+        soundConfig.osc.type = sound.waveform;
         soundConfig.osc.connect(soundConfig.gainNode);
         soundConfig.gainNode.connect(this.context.destination)
       }
