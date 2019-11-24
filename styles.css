@@ -188,13 +188,22 @@ form#instrument-add-controls {
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
   box-sizing: border-box;
-  min-height: 100px;
+  min-height: 130px;
 }
 
 #load-sqnt-button {
   position: absolute;
   right: 0;
   top: 62px;
+  background-color: #1bbbbb;
+  border: 0;
+  color: paleturquoise;
+}
+
+#demo-sqnt-button {
+  position: absolute;
+  right: 0;
+  top: 100px;
   background-color: #1bbbbb;
   border: 0;
   color: paleturquoise;
