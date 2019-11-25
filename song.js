@@ -12,8 +12,9 @@ function Song(name = "Untitled", tempo = 120, keySignature = "Cmaj") {
   this.sectionLetter = "A".charCodeAt(0) - 1;
 }
 
-Song.prototype.addInstrument = function(instrumentName, instrumentSounds) {
-  let newInstrument = new Instrument(instrumentName, instrumentSounds);
+Song.prototype.addInstrument = function(instrumentName, instrumentSounds, instrumentOctave, instrumentDuration) {
+  let sanitisedName = instrumentName.replace(/ /g,"_")
+  let newInstrument = new Instrument(sanitisedName, instrumentSounds, instrumentOctave, instrumentDuration);
   this.instruments.push(newInstrument);
   return newInstrument;
 }

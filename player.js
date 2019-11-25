@@ -129,7 +129,7 @@ Player.prototype.unpackEncodedSong = function(sqntfile) {
   else {
     let loadedSong = new Song(loadedSongData.name, loadedSongData.tempo, loadedSongData.keySignature)
     loadedSongData.instruments.forEach(function(instrument) {
-      loadedSong.addInstrument(instrument.name, instrument.sounds)
+      loadedSong.addInstrument(instrument.name, instrument.sounds, instrument.octave, instrument.duration)
     });
     for (var phrase in loadedSongData.phrases) {
       let currentPhraseData = loadedSongData.phrases[phrase];
@@ -143,7 +143,7 @@ Player.prototype.unpackEncodedSong = function(sqntfile) {
             let currentSemiData = currentBeatData[semi];
             for (var note in currentSemiData) {
               let currentNoteData = currentSemiData[note];
-              let currentLoadingNote = new Note(loadedSong.getInstrumentByName(currentNoteData.instrument.name) , currentNoteData.note);
+              let currentLoadingNote = new Note(loadedSong.getInstrumentByName(currentNoteData.instrument.name), currentNoteData.note, currentNoteData.octave, currentNoteData.duration);
               currentLoadingBar.beats[beat][semi].push(currentLoadingNote);
             };
           };

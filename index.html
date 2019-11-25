@@ -44,7 +44,7 @@
             <label for="song-name">song name : </label>
             <input type="text" id="song-name" placeholder="The Best Song in the World">
             <label for="tempo-input">tempo : <span id="tempo-value"></span></label>
-            <input type="range" id="tempo-input" min="60" max="150" step="5">
+            <input type="range" id="tempo-input" min="60" max="150" value="120" step="5">
             <button type="button" id="create-sqnt-button" onClick="sequentPlayer.sequencer.createSongFromForm()">create song</button>
           </form>
           <hr>
@@ -84,7 +84,13 @@
                   </div>
                 </div>
                 <form id="instrument-add-controls" style="display:none;">
-                  <input id="add-instrument-text" type="text" placeholder="e.g. Flute">
+                  <input id="add-instrument-name" type="text" placeholder="e.g. Melody">
+                  <input type="range" min="1" max="5" value="1" class="add-instrument-slider" id="add-instrument-waveform">
+                  <span id ="add-instrument-waveform-value">1</span>
+                  <input type="range" min="1" max="7" value="3" class="add-instrument-slider" id="add-instrument-octave">
+                  <span id ="add-instrument-octave-value">3</span>
+                  <input type="range" min="1" max="5" value="3" class="add-instrument-slider" id="add-instrument-duration">
+                  <span id ="add-instrument-duration-value">3</span>
                   <div class="add-remove-controls">
                     <button id="add-instrument-button" type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
                     <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
@@ -103,6 +109,28 @@
       </div>
     </div>
     <script async="true">
+      // set up sliders
+      const setUpSlider = (sliderId, outputId, labelList) => {
+        const slider = document.getElementById(sliderId);
+        const output = document.getElementById(outputId);
+        output.innerHTML = labelList ? labelList[slider.value - 1] : slider.value;
+        
+        slider.oninput = function() {
+          output.innerHTML = labelList ? labelList[this.value - 1] : this.value;
+          // slider.value = this.value;
+        }
+      }
+
+      setUpSlider("tempo-input", "tempo-value")
+
+      const waveformLabels = ["triangle","sine","square","sawtooth","noise"]
+      setUpSlider("add-instrument-waveform", "add-instrument-waveform-value", waveformLabels)
+      const octaveLabels = ["real low", "pretty low", "low", "medium","high","pretty high","real high"]
+      setUpSlider("add-instrument-octave", "add-instrument-octave-value", octaveLabels)
+      const durationLabels = ["real long","long","medium","quick","real quick"]
+      setUpSlider("add-instrument-duration", "add-instrument-duration-value", durationLabels)
+
+
       let workspaceToggle = document.getElementById("workspace-toggle-switch");
       let workspaceContainer = document.getElementById("workspaces");
       let playbackWorkspace = document.getElementById("playback-workspace");
@@ -136,14 +164,6 @@
       let createDialogue = document.getElementById('create-song-dialogue-box');
       collapseSongDialogueArea(loadDialogue);
       collapseSongDialogueArea(createDialogue);
-
-      let slider = document.getElementById("tempo-input");
-      let output = document.getElementById("tempo-value");
-      slider.defaultValue = 120;
-      output.innerHTML = slider.value;
-      slider.oninput = function() {
-          output.innerHTML = this.value;
-      }
 
       //making sure we capture enters in text fields
       var addInstrumentText = document.getElementById("add-instrument-text");

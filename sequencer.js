@@ -43,7 +43,7 @@ Sequencer.prototype.toggleNote = function(noteElement) {
     let fillerDiv = document.createElement('div');
     fillerDiv.classList.add('seq-filler');
     noteElement.appendChild(fillerDiv);
-    toggledNoteList.push(new Note(this.currentOnscreenInstrument, note));
+    toggledNoteList.push(new Note(this.currentOnscreenInstrument, note, this.currentOnscreenInstrument.octave, this.currentOnscreenInstrument.duration));
   }
   this.player.refreshNoteBuffer();
 };
@@ -245,7 +245,7 @@ Sequencer.prototype.createSongFromForm = function() {
   let songName = document.getElementById('song-name').value;
   let tempo = document.getElementById('tempo-input').value;
   let newSong = this.player.createSong(songName, tempo);
-  let defaultInstrument = newSong.addInstrument("Trombone");
+  let defaultInstrument = newSong.addInstrument(gobbledigook());
   this.showSongInfo(newSong);
   this.currentOnscreenInstrument = defaultInstrument;
   this.player.visualiser.renderGridArea(this.player.currentSong); // need to run this to make sure we dont start with empty vis grid!
@@ -336,11 +336,43 @@ Sequencer.prototype.reload = function(flag) {
   }
 };
 
+function gobbledigook() {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length
+  for ( var i = 0; i < 6; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 Sequencer.prototype.addInstrument = function() {
-  let newInstrumentElement = document.getElementById('add-instrument-text');
-  let newInstrumentName = newInstrumentElement.value;
-  let newInstrument = this.player.currentSong.addInstrument(newInstrumentName);
-  newInstrumentElement.value = "";
+  let newInstrumentNameElement = document.getElementById('add-instrument-name');
+  let newInstrumentName = newInstrumentNameElement.value || gobbledigook();
+
+  let newInstrumentOctaveElement = document.getElementById('add-instrument-octave');
+  let confirmedOctave = newInstrumentOctaveElement.value;
+  let newInstrumentOctave = confirmedOctave >= 1 && confirmedOctave < 8 ? Math.floor(confirmedOctave) - 1 : 4;
+
+  let newInstrumentDurationElement = document.getElementById('add-instrument-duration');
+  let durationOptions = [1,2,4,8,16]
+  let newInstrumentDuration = durationOptions[newInstrumentDurationElement.value - 1] || 4; 
+
+  let newInstrumentSoundsElement = document.getElementById('add-instrument-waveform');
+  let waveformOptions = ["triangle","sine","square","sawtooth","noise"];
+  let waveform = waveformOptions[newInstrumentSoundsElement.value - 1] || "triangle";
+  let noteConfig = { type: 'note', waveform };
+  let noiseConfig = {
+    type : "noise",
+    filterType : "highpass",
+    filterFrequency : newInstrumentOctave * 2143, // should range nicely between 0 and 15001
+    noiseDuration : newInstrumentDuration
+  };
+  let soundConfig = waveform === 'noise' ? noiseConfig : noteConfig;
+
+  let newInstrumentSounds = [soundConfig]
+  let newInstrument = this.player.currentSong.addInstrument(newInstrumentName, newInstrumentSounds, newInstrumentOctave, newInstrumentDuration);
+  newInstrumentNameElement.value = "";
   let instrumentSelector = document.getElementById('sequencer-transport-bar-instrument-selector');
   let newOption = document.createElement("option")
   newOption.setAttribute("value", newInstrumentName);
