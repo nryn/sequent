@@ -72,6 +72,7 @@ button {
 #workspace-controls {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 #workspace-controls > button {
@@ -94,12 +95,24 @@ button {
   color: #1bbbbb;
 }
 
+#left-workspace-button-loop {
+  position: absolute;
+  left: -38px;
+  top: 10px;
+}
+
+#left-workspace-button-loop.disabled {
+  display: none;
+}
+
 .toggledOn {
-  color: #1bbbbb;
+  display: block;
+  opacity: 1;
 }
 
 .toggledOff {
-  color: #a2cccc;
+  display: block;
+  opacity: 0.4;
 }
 
 #instrument-add-controls .add-remove-controls > button {

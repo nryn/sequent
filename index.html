@@ -33,7 +33,7 @@
     <div id="container">
       <h1>sequent</h1>
       <div id ="workspace-controls">
-        <button id="left-workspace-button" onClick="sequentPlayer.play();">▶</button>
+        <button id="left-workspace-button" onClick="sequentPlayer.playToggle();">▶</button>
         <button id="left-workspace-button-loop" class="toggledOff" onClick="sequentPlayer.loopToggle();">↻</button>
         <div id="workspace-toggle">
           <label class="switch">
@@ -120,6 +120,7 @@
       let playbackWorkspace = document.getElementById("playback-workspace");
       let sequencerWorkspace = document.getElementById("sequencer-workspace");
       let leftWorkspaceButton = document.getElementById("left-workspace-button");
+      let loopButton = document.getElementById("left-workspace-button-loop");
       workspaceToggle.addEventListener("change", swipeToWorkspace, false);
       function swipeToWorkspace() {
         if (workspaceToggle.checked) {
@@ -131,14 +132,16 @@
           workspaceContainer.style.marginRight = "0%";
           playbackWorkspace.style.opacity = "0";
           sequencerWorkspace.style.opacity = "1";
+          loopButton.setAttribute("class", "disabled")
         } else {
-          leftWorkspaceButton.innerHTML = "▶";
+          leftWorkspaceButton.innerHTML = sequentPlayer.isPlaying ? "◼︎" : "▶";
           leftWorkspaceButton.removeAttribute("onclick")
-          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.play();")
+          leftWorkspaceButton.setAttribute("onclick", "sequentPlayer.playToggle();")
           workspaceContainer.style.marginLeft = "0%";
           workspaceContainer.style.marginRight = "-50%";
           playbackWorkspace.style.opacity = "1";
           sequencerWorkspace.style.opacity = "0";
+          loopButton.setAttribute("class", sequentPlayer.loop ? "toggledOn" : "toggledOff")
         };
       };
       let loadDialogue = document.getElementById('load-song-dialogue-box');

@@ -7,6 +7,7 @@ function Player() {
   this.sequencer = new Sequencer(this);
   this.context = new (window.AudioContext || window.webkitAudioContext)();
   this.loop = false;
+  this.isPlaying = false;
 };
 
 Player.prototype.loopToggle = function() {
@@ -91,8 +92,15 @@ Player.prototype.clear = function() {
   this.noteBuffer = [];
 };
 
-Player.prototype.play = function() {
-  this.visualiser.play();
+Player.prototype.playToggle = function() {
+  this.isPlaying = !this.isPlaying
+  
+  if (this.isPlaying === true) {
+    this.visualiser.play(this.loop);
+  }
+  
+  const button = document.getElementById('left-workspace-button');
+  button.innerHTML = this.isPlaying === true ? "◼︎" : "▶"; 
 };
 
 Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
