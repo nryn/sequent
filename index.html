@@ -86,7 +86,17 @@
                 <form id="instrument-add-controls" style="display:none;">
                   <input id="add-instrument-name" type="text" placeholder="e.g. Melody">
                   <input type="range" min="1" max="5" value="1" class="add-instrument-slider" id="add-instrument-waveform">
-                  <span id ="add-instrument-waveform-value">1</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 893 295" width="100" height="40">
+                    <style>
+                      tspan { white-space:pre }
+                      .shp0 { display:none; fill: none;stroke: #1bbbbb;stroke-linecap:square;stroke-width: 30 } 
+                    </style>
+                    <path id="sine" class="shp0" d="M41.13 154.99C110.6 261.78 161.88 274.45 239.61 154.99C313.3 41.66 381.82 46.76 452.24 154.99C524.54 266.14 581.26 270.5 656.37 154.99C730.11 41.66 778.31 41.66 852 154.99"/>
+                    <path id="square" class="shp0" d="M70 251L259 251L260 61L260 61L450 61L450 251L450 251L640 251L640 61L640 61L830 61"/>
+                    <path id="triangle" class="shp0" d="M70 244L260 54L260 54L260 54L450 244L450 244L450 244L640 54L640 54L640 54L830 247" style="display:block;"/>
+                    <path id="sawtooth" class="shp0" d="M834 244L454 54L454 54L454 54L454 244L454 244L454 244L74 54L74 54L74 54L74 247"/>
+                    <path id="noise" class="shp0" d="M32.13 156.99C45.91 178.17 59.3 124.52 72 138C91.3 158.49 109.41 241.77 128.26 241.83C144.47 241.89 159.42 143.45 177.06 132.4C195.21 121.02 211.94 185.68 230.61 156.99C245.81 133.61 260.79 85.28 275.61 71.84C289.86 58.92 303.97 80.54 317.99 76.57C337.77 70.98 357.37 119.17 376.94 130.83C388.84 137.91 401.08 221.73 413 235C423.17 246.32 432.77 109.28 443 125C458.95 149.53 474.2 78.01 489 92C510.19 112.03 530.78 243.93 551.43 241.65C581.71 238.29 612.19 176.52 647 123C669.11 89.01 689.1 179.6 708 166C728.24 151.43 747.18 52.18 767 61C777.49 65.67 788.9 224.78 800 236C813.63 249.78 827.61 133.31 843 156.99"/>
+                  </svg>
                   <input type="range" min="1" max="7" value="3" class="add-instrument-slider" id="add-instrument-octave">
                   <span id ="add-instrument-octave-value">3</span>
                   <input type="range" min="1" max="5" value="3" class="add-instrument-slider" id="add-instrument-duration">
@@ -110,6 +120,14 @@
     </div>
     <script async="true">
       // set up sliders
+      const waveformSlider = document.getElementById("add-instrument-waveform");
+      waveformSlider.oninput = function() {
+        const allWaveformSvgs = document.getElementsByClassName('shp0');
+        for (let el of allWaveformSvgs) el.setAttribute('style','display:none;');
+        const svgToEnable = document.getElementById(["triangle","sine","square","sawtooth","noise"][this.value - 1]);
+        svgToEnable.setAttribute('style','display:block;')
+      }
+
       const setUpSlider = (sliderId, outputId, labelList) => {
         const slider = document.getElementById(sliderId);
         const output = document.getElementById(outputId);
@@ -117,18 +135,12 @@
         
         slider.oninput = function() {
           output.innerHTML = labelList ? labelList[this.value - 1] : this.value;
-          // slider.value = this.value;
         }
       }
 
       setUpSlider("tempo-input", "tempo-value")
-
-      const waveformLabels = ["triangle","sine","square","sawtooth","noise"]
-      setUpSlider("add-instrument-waveform", "add-instrument-waveform-value", waveformLabels)
-      const octaveLabels = ["real low", "pretty low", "low", "medium","high","pretty high","real high"]
-      setUpSlider("add-instrument-octave", "add-instrument-octave-value", octaveLabels)
-      const durationLabels = ["real long","long","medium","quick","real quick"]
-      setUpSlider("add-instrument-duration", "add-instrument-duration-value", durationLabels)
+      setUpSlider("add-instrument-octave", "add-instrument-octave-value", ["real low pitch", "pretty low pitch", "low pitch", "medium pitch","high pitch","pretty high pitch","real high pitch"])
+      setUpSlider("add-instrument-duration", "add-instrument-duration-value", ["real long notes","long notes","medium length notes","quick notes","real quick notes"])
 
 
       let workspaceToggle = document.getElementById("workspace-toggle-switch");
