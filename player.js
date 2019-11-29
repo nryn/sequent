@@ -103,10 +103,15 @@ Player.prototype.playToggle = function() {
   button.innerHTML = this.isPlaying === true ? "◼︎" : "▶"; 
 };
 
+function generateSongName() {
+  const today = new Date()
+  return ["Sunday Song", "Monday Mix", "Tuesday Tune", "Wednesday Wiggle", "Thursday Thang", "Friday Funk", "Saturday Set"][today.getDay()]
+}
+
 Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
   if (JSON.stringify(this.currentSong) == "{}") {
     let tempo = givenTempo;
-    let name = givenName || "The Best Song in the World";
+    let name = givenName || generateSongName();
     let timeSig = [4, 4];
     let song = new Song(name, tempo);
     song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));

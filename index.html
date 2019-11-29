@@ -33,16 +33,15 @@
       </div>
       <div id="create-song-dialogue-box" class="collapsed">
         <div id="overwrite-dialogue-box" class="collpased">
-          <div id ="dialogue-text">
-            <p>creating a new song.</p>
-            <p>any unsaved changes to your current song will be lost.</p>
+          <div class ="dialogue-text">
+            <p id="new-song-warning">creating a new song. any unsaved changes to your current song will be lost.</p>
             <hr>
           </div>
         </div>
-        <div id ="dialogue-text">
+        <div class ="dialogue-text">
           <form id="create-song-form">
             <label for="song-name">song name : </label>
-            <input type="text" id="song-name" placeholder="The Best Song in the World">
+            <input type="text" id="song-name" placeholder="My Cool Tune">
             <label for="tempo-input">tempo : <span id="tempo-value"></span></label>
             <input type="range" id="tempo-input" min="60" max="150" value="120" step="5">
             <button type="button" id="create-sqnt-button" onClick="sequentPlayer.sequencer.createSongFromForm()">create song</button>
@@ -51,7 +50,7 @@
         </div>
       </div>
       <div id="load-song-dialogue-box" class="collapsed">
-        <div id ="dialogue-text">
+        <div class ="dialogue-text">
           <textarea id="load-sqnt-textarea" placeholder="If you have a previously-saved .sqnt.txt file, please paste its contents in this text box."></textarea>
           <button id="load-sqnt-button" onClick="sequentPlayer.unpackEncodedSong()">load</button>
           <button id="demo-sqnt-button" onClick="sequentPlayer.unpackEncodedSong(demoSong)">demo</button>
@@ -84,9 +83,15 @@
                   </div>
                 </div>
                 <form id="instrument-add-controls" style="display:none;">
-                  <input id="add-instrument-name" type="text" placeholder="e.g. Melody">
-                  <input type="range" min="1" max="5" value="1" class="add-instrument-slider" id="add-instrument-waveform">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 893 295" width="100" height="40">
+                  <input id="add-instrument-name" type="text" placeholder="e.g. Sawtooth">
+                  <div class="add-remove-controls">
+                    <button id="add-instrument-button" type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
+                    <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
+                  </div>
+                </form>
+              </div>
+              <div id="instrument-add-params-annotations">
+                  <svg id ="add-instrument-waveform-value" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 893 295" width="100" height="40">
                     <style>
                       tspan { white-space:pre }
                       .shp0 { display:none; fill: none;stroke: #1bbbbb;stroke-linecap:square;stroke-width: 30 } 
@@ -97,15 +102,13 @@
                     <path id="sawtooth" class="shp0" d="M834 244L454 54L454 54L454 54L454 244L454 244L454 244L74 54L74 54L74 54L74 247"/>
                     <path id="noise" class="shp0" d="M32.13 156.99C45.91 178.17 59.3 124.52 72 138C91.3 158.49 109.41 241.77 128.26 241.83C144.47 241.89 159.42 143.45 177.06 132.4C195.21 121.02 211.94 185.68 230.61 156.99C245.81 133.61 260.79 85.28 275.61 71.84C289.86 58.92 303.97 80.54 317.99 76.57C337.77 70.98 357.37 119.17 376.94 130.83C388.84 137.91 401.08 221.73 413 235C423.17 246.32 432.77 109.28 443 125C458.95 149.53 474.2 78.01 489 92C510.19 112.03 530.78 243.93 551.43 241.65C581.71 238.29 612.19 176.52 647 123C669.11 89.01 689.1 179.6 708 166C728.24 151.43 747.18 52.18 767 61C777.49 65.67 788.9 224.78 800 236C813.63 249.78 827.61 133.31 843 156.99"/>
                   </svg>
-                  <input type="range" min="1" max="7" value="3" class="add-instrument-slider" id="add-instrument-octave">
-                  <span id ="add-instrument-octave-value">3</span>
-                  <input type="range" min="1" max="5" value="3" class="add-instrument-slider" id="add-instrument-duration">
-                  <span id ="add-instrument-duration-value">3</span>
-                  <div class="add-remove-controls">
-                    <button id="add-instrument-button" type="button" onClick="sequentPlayer.sequencer.addInstrument();">✚</button>
-                    <button type="button" onClick="sequentPlayer.sequencer.collapseAddInstrumentDialogue();">✖</button>
-                  </div>
-                </form>
+                <span id ="add-instrument-octave-value">3</span>
+                <span id ="add-instrument-duration-value">3</span>
+              </div>
+              <div id="instrument-add-params-controls">
+                <input type="range" min="1" max="5" value="1" class="add-instrument-slider" id="add-instrument-waveform">
+                <input type="range" min="1" max="7" value="3" class="add-instrument-slider" id="add-instrument-octave">
+                <input type="range" min="1" max="5" value="3" class="add-instrument-slider" id="add-instrument-duration">
               </div>
             </div>
             <div id="transport-buttons">
@@ -138,9 +141,22 @@
         }
       }
 
+      const setUpSliderHover = (slider) => {
+        document.getElementById(slider).onmouseover = function(){
+            document.getElementById(slider + "-value").style.opacity = 1;
+        }
+        document.getElementById(slider).onmouseout = function(){
+            document.getElementById(slider + "-value").style.opacity = 0;
+        }
+      }
+
       setUpSlider("tempo-input", "tempo-value")
       setUpSlider("add-instrument-octave", "add-instrument-octave-value", ["real low pitch", "pretty low pitch", "low pitch", "medium pitch","high pitch","pretty high pitch","real high pitch"])
       setUpSlider("add-instrument-duration", "add-instrument-duration-value", ["real long notes","long notes","medium length notes","quick notes","real quick notes"])
+
+      setUpSliderHover("add-instrument-waveform")
+      setUpSliderHover("add-instrument-octave")
+      setUpSliderHover("add-instrument-duration")
 
 
       let workspaceToggle = document.getElementById("workspace-toggle-switch");

@@ -310,11 +310,15 @@ Sequencer.prototype.removePhrase = function() {
 Sequencer.prototype.expandAddInstrumentDialogue = function() {
   document.getElementById('instrument-select-controls').style.display = "none";
   document.getElementById('instrument-add-controls').style.display = "block";
+  document.getElementById('instrument-add-params-controls').setAttribute('class', 'expanded')
+  document.getElementById('instrument-add-params-annotations').setAttribute('class', 'expanded')
 };
 
 Sequencer.prototype.collapseAddInstrumentDialogue = function() {
   document.getElementById('instrument-add-controls').style.display = "none";
   document.getElementById('instrument-select-controls').style.display = "block";
+  document.getElementById('instrument-add-params-controls').setAttribute('class', 'contracted')
+  document.getElementById('instrument-add-params-annotations').setAttribute('class', 'contracted')
 };
 
 Sequencer.prototype.reload = function(flag) {
