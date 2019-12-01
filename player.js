@@ -6,7 +6,16 @@ function Player() {
   this.visualiser = new Visualiser(this);
   this.sequencer = new Sequencer(this);
   this.context = new (window.AudioContext || window.webkitAudioContext)();
+  this.loop = false;
+  this.isPlaying = false;
 };
+
+Player.prototype.loopToggle = function() {
+  this.loop = !this.loop
+  const button = document.getElementById('left-workspace-button-loop');
+  const toggleState = this.loop === true ? 'toggledOn' : 'toggledOff';
+  button.setAttribute('class', toggleState) 
+}
 
 Player.prototype.toggleSongDialogue = function(typeOfDialogue) {
   let dialogueBox = document.getElementById(typeOfDialogue + '-song-dialogue-box');
@@ -83,14 +92,26 @@ Player.prototype.clear = function() {
   this.noteBuffer = [];
 };
 
-Player.prototype.play = function() {
-  this.visualiser.play();
+Player.prototype.playToggle = function() {
+  this.isPlaying = !this.isPlaying
+  
+  if (this.isPlaying === true) {
+    this.visualiser.play(this.loop);
+  }
+  
+  const button = document.getElementById('left-workspace-button');
+  button.innerHTML = this.isPlaying === true ? "◼︎" : "▶"; 
 };
+
+function generateSongName() {
+  const today = new Date()
+  return ["Sunday Song", "Monday Mix", "Tuesday Tune", "Wednesday Wiggle", "Thursday Thang", "Friday Funk", "Saturday Set"][today.getDay()]
+}
 
 Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo = 120) {
   if (JSON.stringify(this.currentSong) == "{}") {
     let tempo = givenTempo;
-    let name = givenName || "The Best Song in the World";
+    let name = givenName || generateSongName();
     let timeSig = [4, 4];
     let song = new Song(name, tempo);
     song.addPhrase(new Phrase([new Bar(timeSig[0], timeSig[1])]));
@@ -103,8 +124,8 @@ Player.prototype.createSong = function(givenName = "Automatic Song", givenTempo 
   }
 };
 
-Player.prototype.unpackEncodedSong = function() {
-  let decodedSongData = atob(document.getElementById('load-sqnt-textarea').value);
+Player.prototype.unpackEncodedSong = function(sqntfile) {
+  let decodedSongData = sqntfile ? atob(sqntfile) : atob(document.getElementById('load-sqnt-textarea').value);
   document.getElementById('load-sqnt-textarea').value = "";
   let loadedSongData = JSON.parse(decodedSongData) || {};
   if (JSON.stringify(loadedSongData) == "{}" || !loadedSongData.name) {
@@ -113,7 +134,7 @@ Player.prototype.unpackEncodedSong = function() {
   else {
     let loadedSong = new Song(loadedSongData.name, loadedSongData.tempo, loadedSongData.keySignature)
     loadedSongData.instruments.forEach(function(instrument) {
-      loadedSong.addInstrument(instrument.name, instrument.sounds)
+      loadedSong.addInstrument(instrument.name, instrument.sounds, instrument.octave, instrument.duration)
     });
     for (var phrase in loadedSongData.phrases) {
       let currentPhraseData = loadedSongData.phrases[phrase];
@@ -127,7 +148,7 @@ Player.prototype.unpackEncodedSong = function() {
             let currentSemiData = currentBeatData[semi];
             for (var note in currentSemiData) {
               let currentNoteData = currentSemiData[note];
-              let currentLoadingNote = new Note(loadedSong.getInstrumentByName(currentNoteData.instrument.name) , currentNoteData.note);
+              let currentLoadingNote = new Note(loadedSong.getInstrumentByName(currentNoteData.instrument.name), currentNoteData.note, currentNoteData.octave, currentNoteData.duration);
               currentLoadingBar.beats[beat][semi].push(currentLoadingNote);
             };
           };

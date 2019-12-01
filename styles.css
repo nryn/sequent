@@ -55,7 +55,7 @@ button {
 
 #workspaces {
   display: flex;
-  margin-left: 50%; //this needs to be edited with js on toggle-click, to animate between the two workspaces, 50% left or right
+  margin-left: 50%; // this needs to be edited with js on toggle-click, to animate between the two workspaces, 50% left or right
   margin-right: 0%;
   transition:margin 1.5s;
   transition-timing-function: cubic-bezier(0.22,0,0.28,1);
@@ -72,6 +72,7 @@ button {
 #workspace-controls {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 #workspace-controls > button {
@@ -81,11 +82,11 @@ button {
   background-color: #e8ffff;
 }
 
-.add-remove-conrols {
+.add-remove-controls {
   display: flex;
 }
 
-.add-remove-conrols > button {
+.add-remove-controls > button {
   width: 45%;
   height: 34px;
   border: 0;
@@ -94,7 +95,27 @@ button {
   color: #1bbbbb;
 }
 
-#instrument-add-controls .add-remove-conrols > button {
+#left-workspace-button-loop {
+  position: absolute;
+  left: -38px;
+  top: 10px;
+}
+
+#left-workspace-button-loop.disabled {
+  display: none;
+}
+
+.toggledOn {
+  display: block;
+  opacity: 1;
+}
+
+.toggledOff {
+  display: block;
+  opacity: 0.4;
+}
+
+#instrument-add-controls .add-remove-controls > button {
   background-color: #1bbbbb;
   color: #e8ffff;
 }
@@ -104,6 +125,75 @@ button {
   padding: 4px 0px 6px 2px;
 }
 
+
+#instrument-add-params-controls {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 7px 7px 0px;
+  background: paleturquoise;
+  width: 0%;
+  border: 0px solid paleturquoise;
+  padding: 0px;
+  overflow: hidden;
+  transition: width 0.5s, padding 0.5s, border-width 0.5s, margin 0.5s;
+  transition-timing-function: ease;
+  right: 10px;
+}
+
+#instrument-add-params-controls.expanded {
+  width: 100%;
+  border-width: 2px;
+  padding: 0px 10px;
+}
+
+#instrument-add-params-controls.contracted {
+  width: 0%;
+  border-width: 0px;
+  padding: 0px 0px;
+}
+
+#instrument-add-params-annotations {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 55px;
+  background: #8ddfdf;
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  position: absolute;
+  right: 0px;
+  opacity: 0;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  transition: opacity 0.5s, transform 0.5s, right 0.8s;
+  transition-timing-function: ease;
+}
+
+#instrument-add-params-annotations.expanded {
+  opacity: 1;
+  /* width: 110px;
+  height: 110px; */
+  right: -120px;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+#instrument-add-params-annotations.contracted {
+  opacity: 0;
+  /* width: 0px;
+  height: 0px; */
+  right: 0px;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
 
 #sequencer-transport-bar-section-controls, #sequencer-transport-bar-instrument-controls {
   display: flex;
@@ -128,7 +218,7 @@ input#song-name {
   font-size: 100%;
 }
 
-input#add-instrument-text {
+input#add-instrument-name {
   padding: 8px;
   border: 0px;
   border-radius: 5px;
@@ -139,9 +229,64 @@ input#add-instrument-text {
   width: 140px;
   height: 30px;
 }
-input#add-instrument-text::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+input#add-instrument-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: paleturquoise;
     opacity: 1; /* Firefox */
+}
+
+.add-instrument-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 30px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin: 0px 0px !important;
+}
+
+.add-instrument-slider:hover {
+  opacity: 1;
+}
+
+#add-instrument-waveform-value, #add-instrument-octave-value, #add-instrument-duration-value {
+  opacity: 0;
+  transition: opacity .4s;
+  text-align: center;
+  position: absolute;
+}
+
+#semibreve, #minim, #quaver, #semiquaver {
+  display: none;
+}
+
+#crotchet {
+  display: block;
+}
+
+#bassClef, #highOct, #mediumOct, #lowOct {
+  display: none;
+}
+
+#trebleClef {
+  display: block;
+}
+
+.add-instrument-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.add-instrument-slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
 }
 
 #load-song-dialogue-box, #create-song-dialogue-box {
@@ -173,9 +318,13 @@ form#instrument-add-controls {
   width: 120px;
 }
 
-#dialogue-text {
+.dialogue-text {
   position: relative;
   text-align: center;
+}
+
+#new-song-warning {
+  color: #1bbbbb;
 }
 
 #load-sqnt-textarea {
@@ -188,13 +337,22 @@ form#instrument-add-controls {
   font-family: 'Comfortaa', 'verdana', san-serif;
   font-size: 100%;
   box-sizing: border-box;
-  min-height: 100px;
+  min-height: 130px;
 }
 
 #load-sqnt-button {
   position: absolute;
   right: 0;
   top: 62px;
+  background-color: #1bbbbb;
+  border: 0;
+  color: paleturquoise;
+}
+
+#demo-sqnt-button {
+  position: absolute;
+  right: 0;
+  top: 100px;
   background-color: #1bbbbb;
   border: 0;
   color: paleturquoise;

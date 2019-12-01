@@ -1,9 +1,11 @@
 'use strict'
 
-function Instrument(name = "Piano", sounds = []) {
+function Instrument(name = "Piano", sounds = [], octave = 4, duration = 4) {
   this.name = name;
   this.sounds = sounds;
   sounds.length ? "noop" : this.createSound();
+  this.octave = octave; // may want to take this out since it should really remain only as a note property
+  this.duration = duration; // may want to take this out since it should really remain only as a note property
 }
 
 Instrument.prototype.createSound = function() {
@@ -17,18 +19,4 @@ Instrument.prototype.createSound = function() {
 
 Instrument.prototype.removeSound = function(pos) {
   this.sounds.splice(pos - 1, 1);
-}
-
-Instrument.prototype.changeSound = function(pos, newSoundSettings) {
-
-  // example of a noise sound
-
-  // newSoundSettings = {
-  //   type : "noise",
-  //   filterType : "highpass",
-  //   filterFrequency : 1000,
-  //   noiseDuration : 1
-  // }
-
-  this.sounds[pos] = newSoundSettings;
 }
