@@ -19,6 +19,7 @@
     <script>
       const sequentPlayer = new Player();
     </script>
+    <title>sequent</title>
   </head>
   <body>
     <div id="container">
@@ -66,8 +67,7 @@
         </div>
         <div class="dialogue-text">
           <form id="create-song-form">
-            <label for="song-name">song name : </label>
-            <input type="text" id="song-name" placeholder="My Cool Tune" />
+            <input type="text" id="song-name" placeholder="enter a song name" />
             <label for="tempo-input"
               >tempo : <span id="tempo-value"></span> bpm</label
             >
@@ -224,7 +224,15 @@
                     d="M32.13 156.99C45.91 178.17 59.3 124.52 72 138C91.3 158.49 109.41 241.77 128.26 241.83C144.47 241.89 159.42 143.45 177.06 132.4C195.21 121.02 211.94 185.68 230.61 156.99C245.81 133.61 260.79 85.28 275.61 71.84C289.86 58.92 303.97 80.54 317.99 76.57C337.77 70.98 357.37 119.17 376.94 130.83C388.84 137.91 401.08 221.73 413 235C423.17 246.32 432.77 109.28 443 125C458.95 149.53 474.2 78.01 489 92C510.19 112.03 530.78 243.93 551.43 241.65C581.71 238.29 612.19 176.52 647 123C669.11 89.01 689.1 179.6 708 166C728.24 151.43 747.18 52.18 767 61C777.49 65.67 788.9 224.78 800 236C813.63 249.78 827.61 133.31 843 156.99"
                   />
                 </svg>
-                <span id="add-instrument-octave-value">3</span>
+                <svg id="add-instrument-octave-value" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+                  <g>
+                   <path id="bassClef" class="octSvg" stroke="#000" id="svg_1" d="m11.691701,80.84596c0.019023,-2.223479 3.605134,-2.955986 5.077251,-4.498604c5.682602,-3.813738 11.21944,-8.216756 14.702669,-14.227107c3.700483,-6.141006 5.707284,-13.663292 4.201998,-20.786546c-0.798243,-4.420045 -5.094365,-7.957604 -9.640118,-7.404391c-2.993872,0.409593 -6.452125,1.09876 -8.184395,3.86298c-1.880325,1.412299 -0.845822,4.722364 1.660917,3.465192c3.207087,-1.22424 7.235154,1.272158 7.10832,4.81046c0.003718,3.354985 -3.39243,5.721731 -6.557349,5.406818c-3.525104,-0.035248 -7.014666,-2.879617 -6.940987,-6.567017c-0.244305,-5.943075 4.897664,-10.797015 10.401619,-12.042598c4.92142,-1.533567 10.642924,-0.916476 14.792931,2.27375c3.087981,2.110907 5.519739,5.311031 6.027083,9.08825c1.095389,4.910858 -0.320214,9.978888 -2.775887,14.251268c-3.156007,5.755645 -7.97823,10.467499 -13.575974,13.847582c-5.199053,3.315594 -10.606916,6.30999 -16.201339,8.905389c-0.032246,-0.128474 -0.064491,-0.256953 -0.096737,-0.385429l-0.000002,0.000003zm37.349362,-24.231587c-2.676652,-1.21214 -2.086112,-6.137586 1.029433,-6.248363c2.331234,-0.543812 4.508771,1.892784 3.789123,4.14602c-0.453964,2.108541 -2.985245,3.02241 -4.818556,2.102342zm0,-13.47384c-2.676652,-1.212135 -2.086112,-6.137586 1.029433,-6.248361c2.331234,-0.543811 4.508771,1.892785 3.789123,4.14602c-0.465754,2.115691 -2.972214,3.018558 -4.818556,2.102341z" stroke-width="0" fill="#1bbbbb"/>
+                   <path id="trebleClef" class="octSvg" stroke="#000" id="svg_2" d="m28.933795,89.503956c-5.386237,-0.856208 -8.294466,-8.859898 -2.912513,-11.791783c5.610556,-2.890876 8.947384,7.400536 2.81889,8.40645c-3.355781,1.257182 4.356943,3.362496 5.794458,1.248554c4.491728,-2.174101 3.797867,-7.832652 2.71718,-11.817802c-0.375041,-3.053018 -0.844054,-6.32154 -4.696048,-4.586412c-9.293252,0.74771 -16.650718,-8.680246 -15.911698,-17.500065c0.2509,-8.319051 7.06513,-14.016906 12.110899,-19.793883c-1.656538,-7.557732 -2.156715,-16.288985 2.645432,-22.874972c4.423335,-5.353683 6.668514,4.443121 7.41674,7.767438c1.662002,7.770586 -1.65189,15.936236 -7.166148,21.413842c0.526528,2.598246 1.044588,5.19823 1.581171,7.794422c5.827179,-1.125057 11.38949,3.798864 11.70732,9.566308c0.900392,5.20809 -2.440047,10.126473 -7.002747,12.364761c-0.075026,4.47225 2.396139,9.111312 1.508215,13.729556c-0.85272,4.774852 -6.207624,7.116304 -10.61115,6.073585l-0.000003,0zm6.083378,-20.375574c1.650934,-3.099036 -1.343628,-8.572156 -1.508042,-12.550153c0.064663,-6.936776 -7.293378,1.343723 -5.105255,4.75021c0.648627,2.015701 6.278584,5.712182 1.107022,3.432415c-5.399248,-3.231478 -5.151949,-11.545906 -0.218588,-15.056506c4.138914,-0.916794 1.611022,-6.439918 0.831148,-8.254066c-5.083468,4.632841 -10.845359,10.466516 -9.96866,17.964806c0.660386,7.028113 8.321991,11.291595 14.862375,9.713296l0,-0.000003zm3.420374,-1.341496c4.848427,-3.112558 4.689308,-11.281243 -0.615222,-13.814785c-5.659962,-2.990733 -1.783249,4.844484 -1.679542,7.826845c0.785487,1.141686 0.34054,7.794157 2.294764,5.98794zm-5.97542,-37.443509c2.982396,-3.607876 6.391597,-8.816536 4.297076,-13.586626c-4.51054,-2.977424 -7.017082,5.072459 -7.128012,8.597327c-0.041035,2.285603 -0.377862,10.163688 2.830939,4.989299l0,0l-0.000003,0z" stroke-opacity="null" stroke-width="0" fill="#1bbbbb"/>
+                   <ellipse id="highOct" class="octSvg" stroke="#000" ry="10.538476" rx="10.538476" id="svg_8" cy="21.506414" cx="71.576975" stroke-opacity="null" stroke-width="0" fill="#1bbbbb"/>
+                   <ellipse id="mediumOct" class="octSvg" stroke="#000" ry="10.538476" rx="10.538476" id="svg_9" cy="50.009378" cx="71.576975" stroke-opacity="null" stroke-width="0" fill="#1bbbbb"/>
+                   <ellipse id="lowOct" class="octSvg" stroke="#000" ry="10.538476" rx="10.538476" id="svg_3" cy="78.564196" cx="71.576975" stroke-opacity="null" stroke-width="0" fill="#1bbbbb"/>
+                  </g>
+                 </svg>
                 <svg
                   id="add-instrument-duration-value"
                   xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +243,7 @@
                     <path
                       stroke="#1bbbbb"
                       id="semibreve"
-                      class="noteSvg"
+                      class="durationSvg"
                       d="m22.28445,59.770593c-3.12881,-0.504877 -6.456327,-1.593914 -8.43535,-4.227763c-0.825067,-1.101 -1.161169,-2.50293 -1.056098,-3.86226c-0.137636,-1.763996 0.887026,-3.349612 2.219824,-4.409464c2.661013,-2.150354 6.170611,-2.899432 9.513619,-3.084059c3.558213,-0.142513 7.255552,0.444244 10.363984,2.25541c1.89515,1.162014 3.57346,3.160461 3.479063,5.495345c0.103624,1.370926 -0.155628,2.825691 -1.116313,3.867367c-1.903395,2.308978 -4.897969,3.317624 -7.742056,3.873192c-2.381685,0.430825 -4.834501,0.456191 -7.226672,0.092232l0,0.000002zm5.813174,-1.347622c1.535125,-0.327599 2.542017,-1.868848 2.520611,-3.391936c0.262195,-3.199744 -0.801777,-6.698963 -3.401953,-8.723736c-1.458691,-1.026455 -3.536999,-1.127256 -5.080715,-0.241031c-1.150798,0.694677 -1.580621,2.072208 -1.577751,3.349546c-0.124714,2.716524 0.673465,5.557082 2.4823,7.623051c1.269121,1.332673 3.275908,2.046199 5.05751,1.384107l-0.000002,0z"
                       stroke-width="0"
                       fill="#1bbbbb"
@@ -243,14 +251,14 @@
                     <path
                       stroke="#1bbbbb"
                       id="minim"
-                      class="noteSvg"
+                      class="durationSvg"
                       d="m12.848484,85.656536c-4.164148,-0.495639 -5.92545,-5.37709 -5.074241,-9.031111c1.464415,-5.77213 7.193439,-9.761044 12.941273,-10.409556c2.180816,-0.180024 4.585346,-0.149519 6.381456,1.224869c1.474043,-0.585436 0.436951,-2.894318 0.705992,-4.278185c0,-17.030677 0,-34.061364 0,-51.092038c3.706889,-0.540009 1.313257,4.708793 1.967073,6.858583c-0.024562,18.798795 0.153783,37.599476 -0.188119,56.396484c-1.807614,7.025227 -9.749739,11.475971 -16.733434,10.330954zm0.704195,-3.070884c5.688832,-1.808973 10.983024,-5.584305 13.689548,-11.011433c0.236467,-3.354968 -3.961352,-2.657074 -5.858837,-1.524291c-3.341882,1.674488 -6.487217,3.874083 -9.093421,6.561604c-1.730634,1.590354 -3.93348,6.478679 0.194775,6.201339l0.570266,-0.080488l0.497664,-0.146735l0,0l0.000005,0.000002z"
                       stroke-width="0"
                       fill="#1bbbbb"
                     />
                     <path
                       id="crotchet"
-                      class="noteSvg"
+                      class="durationSvg"
                       d="m12.491422,85.572298c-3.041788,-0.679977 -5.957624,-3.467215 -5.381121,-6.802459c0.044325,-4.160866 3.548099,-7.097205 6.644634,-9.348959c4.000363,-2.762534 9.514737,-3.63655 13.914854,-1.291214c0.263696,-19.43763 0.114757,-38.880045 0.154129,-58.319859c0.768668,0.180691 2.441866,-0.543075 2.055027,0.793035c-0.037708,20.21179 0.086336,40.424656 -0.098619,60.635565c-0.01942,2.742099 -0.056401,5.713458 -1.985858,7.887898c-3.563812,4.487462 -9.514204,7.465002 -15.303046,6.44599l0,0.000003z"
                       fill-opacity="null"
                       stroke-opacity="null"
@@ -260,7 +268,7 @@
                     />
                     <path
                       id="quaver"
-                      class="noteSvg"
+                      class="durationSvg"
                       d="m12.427232,85.75712c-3.322987,-0.560907 -6.409505,-3.611733 -5.782624,-7.17308c0.317278,-3.909632 3.42493,-7.056232 6.551705,-9.129405c4.161327,-2.832966 9.851028,-3.88536 14.436893,-1.441978c0.268704,-19.70698 0.115566,-39.418896 0.156269,-59.128104c2.891872,-0.700217 1.956839,3.085998 2.613629,4.836953c0.626716,5.148756 4.080098,9.188804 7.517537,12.796367c4.264706,4.534543 8.793218,9.342528 10.179402,15.624839c1.513676,7.288852 -0.906181,14.745421 -4.046515,21.277625c-0.2274,2.093508 -4.06751,5.122333 -2.237946,1.339254c3.080665,-6.471612 5.62569,-13.92475 3.52294,-21.091047c-2.002429,-7.150615 -8.24385,-13.122448 -15.673827,-14.193245c-0.048019,15.099057 0.11693,30.200969 -0.176088,45.297607c-0.730448,4.44694 -4.592907,7.746529 -8.466273,9.630628c-2.670869,1.162887 -5.685315,1.866479 -8.5951,1.353591l-0.000003,-0.000005z"
                       fill-opacity="null"
                       stroke-opacity="null"
@@ -270,7 +278,7 @@
                     />
                     <path
                       id="semiquaver"
-                      class="noteSvg"
+                      class="durationSvg"
                       d="m13.021918,84.728532c-3.423559,-0.696898 -6.008075,-4.071952 -5.150895,-7.581051c1.212313,-4.923135 5.805341,-8.328683 10.402001,-9.947214c3.061862,-1.016833 6.536405,-0.863124 9.411386,0.648795c0.25672,-18.804297 0.110125,-37.613335 0.149109,-56.419758c1.037752,-0.000254 2.369429,-0.335275 2.087462,1.167552c0.144804,3.377101 1.804483,6.468661 4.355076,8.647134c5.69009,5.301215 12.090864,11.057673 13.39795,19.137187c0.37105,3.408602 -0.026629,6.843825 -0.783871,10.172446c2.242515,4.185369 2.107386,9.256187 1.196825,13.795587c-0.590453,2.397013 -1.553537,4.706085 -2.777788,6.844353c-2.890666,1.345604 0.342625,-2.199372 0.302072,-3.47644c1.563546,-3.836484 1.742912,-8.109995 1.031756,-12.151214c-1.549203,-5.911753 -7.406048,-8.800253 -12.11588,-11.891102c-1.704133,-0.666894 -5.346809,-4.689083 -4.624498,-0.747743c-0.157872,10.68372 -0.130915,21.368982 -0.18037,32.053523c-1.976992,4.953538 -6.512351,8.734016 -11.780188,9.681995c-1.61384,0.278889 -3.30395,0.380877 -4.920148,0.065956l0.000002,-0.000005zm32.845642,-40.395593c0.046966,-6.080145 -4.481911,-10.999529 -8.91961,-14.605182c-2.220584,-1.674132 -4.572772,-3.447756 -7.069732,-4.53129c0.153581,3.496347 1.753482,6.903008 3.668526,9.806475c3.608946,4.835488 9.057389,8.069914 12.080593,13.393986c0.362518,-1.321878 0.25317,-2.709245 0.240223,-4.06399z"
                       fill-opacity="null"
                       stroke-opacity="null"
@@ -294,7 +302,7 @@
                   type="range"
                   min="1"
                   max="7"
-                  value="3"
+                  value="4"
                   class="add-instrument-slider"
                   id="add-instrument-octave"
                 />
@@ -324,41 +332,36 @@
     </div>
     <script async="true">
       // set up sliders
-      const waveformSlider = document.getElementById("add-instrument-waveform");
-      waveformSlider.oninput = function() {
-        const allWaveformSvgs = document.getElementsByClassName("waveformSvg");
-        for (let el of allWaveformSvgs)
-          el.setAttribute("style", "display:none;");
-        const svgToEnable = document.getElementById(
-          ["triangle", "sine", "square", "sawtooth", "noise"][this.value - 1]
-        );
-        svgToEnable.setAttribute("style", "display:block;");
+
+      // tempo slider
+      const tempoSlider = document.getElementById("tempo-input");
+      const tempoOutput = document.getElementById("tempo-value");
+      tempoOutput.innerHTML = tempoSlider.value;
+      tempoSlider.oninput = function() {
+        tempoOutput.innerHTML = this.value;
       };
 
-      const durationSlider = document.getElementById("add-instrument-duration");
-      durationSlider.oninput = function() {
-        const allNoteSvgs = document.getElementsByClassName("noteSvg");
-        for (let el of allNoteSvgs) el.setAttribute("style", "display:none;");
-        const svgToEnable = document.getElementById(
-          ["semibreve", "minim", "crotchet", "quaver", "semiquaver"][
-            this.value - 1
-          ]
-        );
-        svgToEnable.setAttribute("style", "display:block;");
-      };
-
-      const setUpSlider = (sliderId, outputId, labelList) => {
+      // instrument sliders
+      const setUpInstrumentSlider = (sliderId, svgClass, svgIdGroups) => {
         const slider = document.getElementById(sliderId);
-        const output = document.getElementById(outputId);
-        output.innerHTML = labelList
-          ? labelList[slider.value - 1]
-          : slider.value;
-
         slider.oninput = function() {
-          output.innerHTML = labelList ? labelList[this.value - 1] : this.value;
+          // hide all svgs
+          const allSvgs = document.getElementsByClassName(svgClass);
+          for (let el of allSvgs) el.setAttribute("style", "display:none;");
+          // and show the relevant svgIdGroup
+          const elementIds = svgIdGroups[this.value - 1]
+          for (let elementId of elementIds) {
+            const el = document.getElementById(elementId); 
+            el.setAttribute("style", "display:block;");
+          }
         };
-      };
+      }
 
+      setUpInstrumentSlider("add-instrument-waveform", "waveformSvg", [["triangle"], ["sine"], ["square"], ["sawtooth"], ["noise"]])
+      setUpInstrumentSlider("add-instrument-octave", "octSvg", [["bassClef", "lowOct"], ["bassClef", "mediumOct"], ["bassClef", "highOct"], ["trebleClef"], ["trebleClef", "lowOct"], ["trebleClef", "mediumOct"],["trebleClef", "highOct"]])
+      setUpInstrumentSlider("add-instrument-duration", "durationSvg", [["semibreve"], ["minim"], ["crotchet"], ["quaver"], ["semiquaver"]])
+
+      // hover effects for instrument sliders
       const setUpSliderHover = slider => {
         document.getElementById(slider).onmouseover = function() {
           document.getElementById(slider + "-value").style.opacity = 1;
@@ -368,20 +371,11 @@
         };
       };
 
-      setUpSlider("tempo-input", "tempo-value");
-      setUpSlider("add-instrument-octave", "add-instrument-octave-value", [
-        "real low pitch",
-        "pretty low pitch",
-        "low pitch",
-        "medium pitch",
-        "high pitch",
-        "pretty high pitch",
-        "real high pitch"
-      ]);
-
       setUpSliderHover("add-instrument-waveform");
       setUpSliderHover("add-instrument-octave");
       setUpSliderHover("add-instrument-duration");
+
+      // workspace controls
 
       let workspaceToggle = document.getElementById("workspace-toggle-switch");
       let workspaceContainer = document.getElementById("workspaces");
@@ -450,7 +444,6 @@
       // let foo = new Sound(sequentPlayer.context, testInstrument)
       // foo.play(440, sequentPlayer.context.currentTime, 4)
 
-      const testInstrument = new Instrument("TriangleWave");
     </script>
   </body>
 </html>

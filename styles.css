@@ -257,6 +257,22 @@ input#add-instrument-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+
   position: absolute;
 }
 
+#semibreve, #minim, #quaver, #semiquaver {
+  display: none;
+}
+
+#crotchet {
+  display: block;
+}
+
+#bassClef, #highOct, #mediumOct, #lowOct {
+  display: none;
+}
+
+#trebleClef {
+  display: block;
+}
+
 .add-instrument-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
